@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Confirma tu acceso a Amor Sin Guerra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/landing.css">
+  <link rel="stylesheet" href="styles/checkout.css">
+</head>
+<body class="page-root">
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <h1 class="brand-title">Amor Sin Guerra</h1>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section container checkout">
+      <h2 class="section-title">Confirma tu acceso a Amor Sin Guerra</h2>
+
+      <div class="order-summary">
+        <h3>Resumen del pedido</h3>
+        <p><strong>Producto:</strong> Serie Amor Sin Guerra - Acceso Pioneros</p>
+        <p><strong>Precio:</strong> <span id="price-display">$119,000</span> <span class="currency">COP</span></p>
+        <p><strong>Total:</strong> <span id="total-display">$119,000</span> <span class="currency">COP</span></p>
+      </div>
+
+      <div class="payment-section">
+        <h3>Pago seguro con Bancolombia</h3>
+
+        <div class="payment-transparency">
+          <h4>Pago directo al desarrollador</h4>
+          <p>Henry Cuervo, Psicólogo UPB - Desarrollador de la metodología</p>
+          <p class="small-text">Transferencia segura a cuenta personal verificada</p>
+        </div>
+
+        <div class="qr-wrapper">
+          <img id="banco-qr" src="https://cdn.builder.io/api/v1/image/assets%2Fb7400011ae9a4ecca8c90d62243bba6c%2F43e01c299749462d96dd1e08d9f1a40a?format=webp&width=800" alt="Código QR Bancolombia" />
+        </div>
+
+        <p class="qr-instructions">Escanea el código QR con tu app Bancolombia</p>
+        <ol class="qr-steps">
+          <li>Abre tu app Bancolombia</li>
+          <li>Escanea el código</li>
+          <li>Confirma el pago por <span id="price-in-instructions">$119,000</span> COP</li>
+        </ol>
+      </div>
+
+      <form class="confirm-form" action="confirmacion.html" method="get">
+        <h3>Confirmación</h3>
+        <label for="fullname">Nombre completo de la pareja</label>
+        <input id="fullname" name="fullname" class="form-input" type="text" required placeholder="Nombres (ej. Ana & Miguel)">
+
+        <label for="email">Email de contacto</label>
+        <input id="email" name="email" class="form-input" type="email" required placeholder="Correo de contacto">
+
+        <label for="whatsapp">Teléfono WhatsApp</label>
+        <input id="whatsapp" name="whatsapp" class="form-input" type="tel" placeholder="(+57) 3xx xxx xxxx" required>
+
+        <label for="reference">Número de referencia Bancolombia</label>
+        <input id="reference" name="reference" class="form-input" type="text" placeholder="Referencia del pago" required>
+
+        <input type="hidden" id="price-field" name="price" value="119000">
+
+        <button class="btn-primary btn-large" type="submit">Confirmar mi acceso</button>
+      </form>
+
+      <p class="support">¿Dudas? Escribe a <a href="mailto:info@amorsinguerra.co">info@amorsinguerra.co</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="muted">Soporte: info@amorsinguerra.co</p>
+    </div>
+  </footer>
+
+  <script>
+    // Read price from URL query param ?price (in COP without currency symbol) and update displays
+    (function(){
+      function getParam(name){
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+      const priceParam = getParam('price');
+      const priceValue = priceParam ? priceParam : '119000';
+      // Format as currency with thousands separator
+      function formatCOP(n){
+        return '$' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      }
+      const formatted = formatCOP(priceValue);
+      document.getElementById('price-display').textContent = formatted;
+      document.getElementById('total-display').textContent = formatted;
+      document.getElementById('price-in-instructions').textContent = formatted;
+      document.getElementById('price-field').value = priceValue;
+
+      // If there are other query params (utm_source, etc.) they will be forwarded by the form via GET.
+    })();
+  </script>
+
+  <!-- Analytics placeholders: add Facebook Pixel ID and Google Analytics Measurement ID later -->
+</body>
+</html>
