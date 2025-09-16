@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>¡Bienvenidos a Amor Sin Guerra!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/landing.css">
+  <link rel="stylesheet" href="styles/checkout.css">
+</head>
+<body class="page-root">
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <h1 class="brand-title">Amor Sin Guerra</h1>
+        <p class="brand-sub">Método basado en la investigación de Gottman — técnicas aplicables y medibles</p>
+      </div>
+      <nav class="header-cta">
+        <a class="btn-primary" href="/checkout.html">Confirmar acceso</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section container confirmation">
+      <h2 class="section-title">¡Bienvenidos a Amor Sin Guerra!</h2>
+      <p class="lead">Tu acceso ha sido registrado exitosamente.</p>
+
+      <div class="next-steps">
+        <h3>Próximos pasos</h3>
+        <ul>
+          <li>Recibirás un email con acceso en las próximas 24 horas</li>
+          <li>Únete al grupo WhatsApp exclusivo de pioneros <a id="whatsapp-link" href="#">(Unirme al grupo)</a></li>
+          <li>La serie estará disponible <strong id="release-date">[FECHA]</strong></li>
+        </ul>
+      </div>
+
+      <div class="social-share">
+        <p>Comparte para invitar a otras parejas:</p>
+        <a class="btn-primary" href="https://www.facebook.com/sharer/sharer.php?u=" id="share-fb">Compartir en Facebook</a>
+        <a class="btn-primary" href="#" id="share-wa">Compartir en WhatsApp</a>
+      </div>
+
+      <p class="muted">Si tienes preguntas escríbenos a <a href="mailto:info@amorsinguerra.co">info@amorsinguerra.co</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="muted">© Amor Sin Guerra — Basado en métodos de Gottman. Información con fines educativos y terapéuticos.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Read query params forwarded from the checkout form (price, fullname, email)
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const price = params.get('price') || '119000';
+      const fullname = params.get('fullname') || '';
+      const whatsapp = params.get('whatsapp') || '';
+      const releaseDate = params.get('release_date') || '[FECHA]';
+
+      // Update release date placeholder if provided
+      document.getElementById('release-date').textContent = releaseDate;
+
+      // WhatsApp group link - set by site admin later, placeholder for now
+      const whatsappLink = 'https://chat.whatsapp.com/REEMPLAZAR_POR_ENLACE_DEL_GRUPO';
+      const waEl = document.getElementById('whatsapp-link');
+      waEl.href = whatsappLink;
+
+      // Share links
+      const pageUrl = window.location.href;
+      document.getElementById('share-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(pageUrl);
+      document.getElementById('share-wa').href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('He confirmado acceso a Amor Sin Guerra. Únete: ' + pageUrl);
+
+      // Trigger FB Purchase event if fbq exists
+      try{
+        if(window.fbq && typeof window.fbq === 'function'){
+          window.fbq('track', 'Purchase', {value: price, currency: 'COP'});
+        }
+      }catch(e){
+        // no-op if pixel not configured
+      }
+
+      // Google Analytics event if gtag exists
+      try{
+        if(window.gtag && typeof window.gtag === 'function'){
+          window.gtag('event', 'purchase', {currency: 'COP', value: price});
+        }
+      }catch(e){ }
+
+    })();
+  </script>
+
+  <!-- Analytics placeholders: add Facebook Pixel ID and Google Analytics Measurement ID later -->
+</body>
+</html>
