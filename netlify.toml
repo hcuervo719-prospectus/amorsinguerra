@@ -1,9 +1,10 @@
+# Netlify configuration
+# Recommended: update publish directory if you add a build step later
 [build]
   publish = "."
+  command = ""
 
-# Redirect old landing URL to site root
 [[redirects]]
   from = "/landing.html"
   to = "/"
   status = 301
-  force = true
