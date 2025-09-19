@@ -1,0 +1,10 @@
+# Netlify configuration
+# Recommended: update publish directory if you add a build step later
+[build]
+  publish = "."
+  command = ""
+
+[[redirects]]
+  from = "/landing.html"
+  to = "/"
+  status = 301
