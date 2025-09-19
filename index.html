@@ -238,9 +238,8 @@
       }
 
       // Update CTA texts and links
-      // CTA text overridden to prioritize 'Enviar consulta' across the site
-      const ctaText = 'Enviar consulta';
-      const ctaHref = 'mailto:hcuervo719@gmail.com?subject=Consulta%20Amor%20Sin%20Guerra';
+      const ctaText = isPost ? 'Reserva tu cupo - Precio final' : ('Reserva tu cupo - Preventa ' + (current ? ('Etapa ' + current.id) : ''));
+      const ctaHref = 'checkout.html?price=' + (isPost ? postPreventa.price : price);
 
       const headerCta = document.querySelector('.header-cta .btn-primary');
       const heroCta = document.querySelector('.hero .hero-cta');
