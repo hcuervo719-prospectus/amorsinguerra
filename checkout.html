@@ -49,15 +49,16 @@
           <img id="banco-qr" src="https://cdn.builder.io/api/v1/image/assets%2Fb7400011ae9a4ecca8c90d62243bba6c%2F43e01c299749462d96dd1e08d9f1a40a?format=webp&width=800" alt="Código QR Bancolombia" />
         </div>
 
-        <p class="qr-instructions">Escanea el código QR con tu app Bancolombia</p>
+        <p class="qr-instructions">Escanea el código QR con tu app bancaria</p>
         <ol class="qr-steps">
-          <li>Abre tu app Bancolombia</li>
+          <li>Abre tu app bancaria</li>
           <li>Escanea el código</li>
           <li>Confirma el pago por <span id="price-in-instructions">$119,000</span> COP</li>
         </ol>
       </div>
 
-      <form class="confirm-form" action="confirmacion.html" method="get">
+      <form class="confirm-form" name="checkout" method="POST" data-netlify="true" enctype="multipart/form-data" action="/confirmacion.html">
+        <input type="hidden" name="form-name" value="checkout" />
         <h3>Confirmación</h3>
         <label for="fullname">Nombre completo de la pareja</label>
         <input id="fullname" name="fullname" class="form-input" type="text" required placeholder="Nombres (ej. Ana & Miguel)">
@@ -68,8 +69,9 @@
         <label for="whatsapp">Teléfono WhatsApp</label>
         <input id="whatsapp" name="whatsapp" class="form-input" type="tel" placeholder="(+57) 3xx xxx xxxx" required>
 
-        <label for="reference">Número de referencia Bancolombia</label>
-        <input id="reference" name="reference" class="form-input" type="text" placeholder="Referencia del pago" required>
+        <label for="screenshot">Adjunta pantallazo de la transacción</label>
+        <input id="screenshot" name="screenshot" class="form-input" type="file" accept="image/*" required>
+        <p class="small-text">Sube una captura de pantalla (jpg, png). Si no puedes adjuntar, envía el comprobante por email después.</p>
 
         <input type="hidden" id="price-field" name="price" value="119000">
         <input type="hidden" id="stage-field" name="stage" value="">
