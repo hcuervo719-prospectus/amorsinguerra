@@ -98,3 +98,5 @@ body.page-root{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helv
 .stage-benefits{margin:8px 0 0;color:var(--muted)}
 .stage-meta{margin:6px 0 0;color:var(--muted);font-size:0.95rem}
 .prelaunch-note{margin-top:12px}
+
+.stage--active{border-color:var(--blue-700);box-shadow:0 4px 18px rgba(11,111,164,0.08)}
