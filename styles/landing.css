@@ -88,3 +88,13 @@ body.page-root{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helv
   .form-input[type="email"]{grid-column:auto}
   .lead-form textarea{grid-column:auto}
 }
+
+/* Stages pricing styles */
+.stages{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.stage{background:#fff;border:1px solid var(--blue-100);padding:12px;border-radius:8px}
+.stage-header{display:flex;justify-content:space-between;align-items:center}
+.stage-title{margin:0;font-weight:700;color:var(--blue-700)}
+.stage-price{font-weight:700;color:var(--blue-900)}
+.stage-benefits{margin:8px 0 0;color:var(--muted)}
+.stage-meta{margin:6px 0 0;color:var(--muted);font-size:0.95rem}
+.prelaunch-note{margin-top:12px}
