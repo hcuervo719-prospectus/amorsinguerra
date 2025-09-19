@@ -3,12 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Tu acceso digital a Amor Sin Guerra está confirmado. Recibirás un email con acceso en 24 horas y un enlace para unirte al grupo WhatsApp de participantes.">
-  <title>Amor Sin Guerra — Confirmación de acceso (Acceso Digital)</title>
-  <link rel="icon" href="https://cdn.builder.io/api/v1/image/assets%2Fb7400011ae9a4ecca8c90d62243bba6c%2F7260047a15434bc58759391e342f94ba?format=webp&width=800" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+  <title>Confirmación — Amor Sin Guerra</title>
   <link rel="stylesheet" href="styles/landing.css">
   <link rel="stylesheet" href="styles/checkout.css">
 </head>
@@ -19,106 +14,32 @@
         <img src="https://cdn.builder.io/api/v1/image/assets%2Fb7400011ae9a4ecca8c90d62243bba6c%2F3038dfb616db4d8ea6f0c0138131718c?format=webp&width=800" alt="Harmonia" class="brand-logo" />
         <div>
           <h1 class="brand-title">Harmonia presenta: Amor Sin Guerra</h1>
-          <p class="brand-sub">Método basado en la investigación de Gottman — técnicas aplicables y medibles</p>
         </div>
       </div>
-      <nav class="header-cta">
-        <a class="btn-primary" href="/checkout.html">Confirmar acceso</a>
-      </nav>
     </div>
   </header>
 
   <main>
-    <section class="section container confirmation">
-      <h2 class="section-title">¡Bienvenidos a Amor Sin Guerra!</h2>
-      <p class="lead">Tu acceso ha sido registrado exitosamente.</p>
-      <p id="reserved-stage" class="lead" style="margin-top:8px;color:var(--blue-900);"></p>
+    <section class="section container">
+      <h2 class="section-title">¡Gracias! Hemos recibido tu confirmación</h2>
+      <p class="small-muted">Tu pago ha sido registrado y en breve validaremos tu acceso. Revisa tu correo para más instrucciones.</p>
 
-      <div class="next-steps">
-        <h3>Próximos pasos</h3>
-        <ul>
-          <li>Recibirás un email con acceso en las próximas 24 horas</li>
-          <li>Únete al grupo WhatsApp exclusivo de participantes <a id="whatsapp-link" href="#">(Unirme al grupo)</a></li>
-          <li>La serie estará disponible <strong id="release-date">[FECHA]</strong></li>
-        </ul>
+      <div style="margin-top:18px">
+        <a class="btn-primary btn-large" href="/">Volver al inicio</a>
+        <a class="btn-secondary btn-gap" href="/episodios.html">Ir al contenido</a>
       </div>
 
-      <div class="social-share">
-        <p>Comparte para invitar a otras parejas:</p>
-        <a class="btn-primary" href="https://www.facebook.com/sharer/sharer.php?u=" id="share-fb">Compartir en Facebook</a>
-        <a class="btn-primary" href="#" id="share-wa">Compartir en WhatsApp</a>
+      <div style="margin-top:18px">
+        <p>Si necesitas ayuda, escribe a <a href="mailto:info@amorsinguerra.com">info@amorsinguerra.com</a> y escanea el comprobante que subiste.</p>
       </div>
-
-      <p class="muted">Si tienes preguntas escríbenos a <a href="mailto:info@amorsinguerra.co">info@amorsinguerra.co</a></p>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p class="muted">© Harmonia — Producto 100% digital. Información con fines educativos y terapéuticos.</p>
+      <p class="muted">Soporte: info@amorsinguerra.com</p>
+      <p class="muted">Producto 100% digital. Acceso en línea tras confirmación de pago.</p>
     </div>
   </footer>
-
-  <script>
-    // Read query params forwarded from the checkout form (price, fullname, email, stage)
-    (function(){
-      const params = new URLSearchParams(window.location.search);
-      const price = params.get('price') || '119000';
-      const fullname = params.get('fullname') || '';
-      const whatsapp = params.get('whatsapp') || '';
-      const releaseDate = params.get('release_date') || '[FECHA]';
-      const stage = params.get('stage') || null;
-
-      // Update release date placeholder if provided
-      const releaseEl = document.getElementById('release-date');
-      if (releaseEl) releaseEl.textContent = releaseDate;
-
-      // Display reserved stage if provided
-      const reservedEl = document.getElementById('reserved-stage');
-      if(reservedEl){
-        if(stage){
-          if(stage === 'final'){
-            reservedEl.textContent = 'Has reservado: Precio final';
-          } else {
-            reservedEl.textContent = 'Has reservado: Preventa Etapa ' + stage;
-          }
-        } else {
-          // hide if no stage provided
-          reservedEl.style.display = 'none';
-        }
-      }
-
-      // WhatsApp group link - set by site admin later, placeholder for now
-      const whatsappLink = 'https://chat.whatsapp.com/REEMPLAZAR_POR_ENLACE_DEL_GRUPO';
-      const waEl = document.getElementById('whatsapp-link');
-      if(waEl) waEl.href = whatsappLink;
-
-      // Share links
-      const pageUrl = window.location.href;
-      const fbEl = document.getElementById('share-fb');
-      const waShareEl = document.getElementById('share-wa');
-      if(fbEl) fbEl.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(pageUrl);
-      if(waShareEl) waShareEl.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('He confirmado acceso a Amor Sin Guerra. Únete: ' + pageUrl);
-
-      // Trigger FB Purchase event if fbq exists
-      try{
-        if(window.fbq && typeof window.fbq === 'function'){
-          window.fbq('track', 'Purchase', {value: price, currency: 'COP'});
-        }
-      }catch(e){
-        // no-op if pixel not configured
-      }
-
-      // Google Analytics event if gtag exists
-      try{
-        if(window.gtag && typeof window.gtag === 'function'){
-          window.gtag('event', 'purchase', {currency: 'COP', value: price});
-        }
-      }catch(e){ }
-
-    })();
-  </script>
-
-  <!-- Analytics placeholders: add Facebook Pixel ID and Google Analytics Measurement ID later -->
 </body>
 </html>
