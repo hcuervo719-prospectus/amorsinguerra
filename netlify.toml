@@ -1,6 +1,5 @@
 [build]
   publish = "."
-  command = ""
 
 # Redirect old landing URL to site root
 [[redirects]]
@@ -8,6 +7,3 @@
   to = "/"
   status = 301
   force = true
-
-# Recommended: update publish directory if you add a build step later
-# For static site now, base = root and publish = "." is correct.
