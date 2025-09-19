@@ -56,26 +56,45 @@
   </footer>
 
   <script>
-    // Read query params forwarded from the checkout form (price, fullname, email)
+    // Read query params forwarded from the checkout form (price, fullname, email, stage)
     (function(){
       const params = new URLSearchParams(window.location.search);
       const price = params.get('price') || '119000';
       const fullname = params.get('fullname') || '';
       const whatsapp = params.get('whatsapp') || '';
       const releaseDate = params.get('release_date') || '[FECHA]';
+      const stage = params.get('stage') || null;
 
       // Update release date placeholder if provided
-      document.getElementById('release-date').textContent = releaseDate;
+      const releaseEl = document.getElementById('release-date');
+      if (releaseEl) releaseEl.textContent = releaseDate;
+
+      // Display reserved stage if provided
+      const reservedEl = document.getElementById('reserved-stage');
+      if(reservedEl){
+        if(stage){
+          if(stage === 'final'){
+            reservedEl.textContent = 'Has reservado: Precio final';
+          } else {
+            reservedEl.textContent = 'Has reservado: Preventa Etapa ' + stage;
+          }
+        } else {
+          // hide if no stage provided
+          reservedEl.style.display = 'none';
+        }
+      }
 
       // WhatsApp group link - set by site admin later, placeholder for now
       const whatsappLink = 'https://chat.whatsapp.com/REEMPLAZAR_POR_ENLACE_DEL_GRUPO';
       const waEl = document.getElementById('whatsapp-link');
-      waEl.href = whatsappLink;
+      if(waEl) waEl.href = whatsappLink;
 
       // Share links
       const pageUrl = window.location.href;
-      document.getElementById('share-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(pageUrl);
-      document.getElementById('share-wa').href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('He confirmado acceso a Amor Sin Guerra. Únete: ' + pageUrl);
+      const fbEl = document.getElementById('share-fb');
+      const waShareEl = document.getElementById('share-wa');
+      if(fbEl) fbEl.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(pageUrl);
+      if(waShareEl) waShareEl.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('He confirmado acceso a Amor Sin Guerra. Únete: ' + pageUrl);
 
       // Trigger FB Purchase event if fbq exists
       try{
