@@ -191,5 +191,78 @@
       </div>
     </footer>
   </main>
+  <script>
+    (function(){
+      const year = new Date().getFullYear();
+      const stages = [
+        { id: 1, end: new Date(year, 9, 11, 23, 59, 59), price: 119000, label: 'Etapa 1', deadline: '11 octubre' },
+        { id: 2, end: new Date(year, 9, 18, 23, 59, 59), price: 159000, label: 'Etapa 2', deadline: '18 octubre' },
+        { id: 3, end: new Date(year, 9, 25, 23, 59, 59), price: 199000, label: 'Etapa 3', deadline: '25 octubre' },
+        { id: 4, end: new Date(year, 10, 1, 23, 59, 59), price: 239000, label: 'Etapa 4', deadline: '1 noviembre' },
+        { id: 5, end: new Date(year, 10, 8, 23, 59, 59), price: 279000, label: 'Etapa 5', deadline: '8 noviembre' },
+        { id: 6, end: new Date(year, 10, 15, 23, 59, 59), price: 319000, label: 'Etapa 6', deadline: '15 noviembre' }
+      ];
+      const postPreventa = { price: 369000, label: 'Precio final' };
+
+      function formatCOP(n){
+        const s = n.toString();
+        return '$' + s.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      }
+
+      const now = new Date();
+      let current = stages.find(s => now <= s.end) || null;
+      const isPost = !current;
+      const activeStage = current ? current.id : null;
+      const price = current ? current.price : postPreventa.price;
+
+      // Update display price
+      const priceStrong = document.querySelector('.offer-price strong');
+      if(priceStrong){ priceStrong.textContent = formatCOP(price) + ' COP'; }
+
+      // Update hero descriptor
+      const heroDescriptor = document.querySelector('.hero .small-muted');
+      if(heroDescriptor){
+        if(current){
+          heroDescriptor.textContent = current.label + ': ' + formatCOP(current.price) + ' hasta ' + current.deadline;
+        } else {
+          heroDescriptor.textContent = 'Precio final: ' + formatCOP(postPreventa.price);
+        }
+      }
+
+      // Update CTA texts and links
+      const ctaText = isPost ? 'Reserva tu cupo - Precio final' : ('Reserva tu cupo - Preventa ' + (current ? ('Etapa ' + current.id) : ''));
+      const ctaHref = 'checkout.html?price=' + (isPost ? postPreventa.price : price);
+
+      const headerCta = document.querySelector('.header-cta .btn-primary');
+      const heroCta = document.querySelector('.hero .hero-cta');
+      const offerCta = document.querySelector('.offer-card .btn-primary');
+      const contactBtn = document.querySelector('.lead-form button');
+
+      [headerCta, heroCta, offerCta].forEach(a => {
+        if(!a) return;
+        a.textContent = ctaText;
+        a.setAttribute('href', ctaHref);
+      });
+
+      if(contactBtn){ contactBtn.textContent = ctaText; }
+
+      // Highlight active stage card
+      const stageEls = Array.from(document.querySelectorAll('.stages .stage'));
+      stageEls.forEach((el, idx) => {
+        el.classList.toggle('stage--active', (current && (idx+1) === current.id));
+      });
+
+      // If offer price element exists, also update small-muted under offer
+      const offerDescriptor = document.querySelector('.offer-card > .small-muted');
+      if(offerDescriptor){
+        if(current){
+          offerDescriptor.textContent = current.label + ': ' + formatCOP(current.price) + ' hasta ' + current.deadline;
+        } else {
+          offerDescriptor.textContent = 'Precio final: ' + formatCOP(postPreventa.price);
+        }
+      }
+
+    })();
+  </script>
 </body>
 </html>
