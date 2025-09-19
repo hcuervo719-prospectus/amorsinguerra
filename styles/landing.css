@@ -25,9 +25,13 @@ body.page-root{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helv
 .hero-benefits li{margin:6px 0}
 .btn-primary{background:var(--blue-700);color:#fff;text-decoration:none;border-radius:8px;display:inline-block;font-weight:600}
 
-.btn-secondary{background:transparent;color:var(--blue-700);border:1px solid var(--blue-700);text-decoration:none;border-radius:8px;display:inline-block;padding:10px 14px;font-weight:600}
+/* Secondary button now uses warm accent to stand out */
+.btn-secondary{background:var(--warm-500);color:#fff;border:1px solid var(--warm-500);text-decoration:none;border-radius:8px;display:inline-block;padding:10px 14px;font-weight:700}
 
 .btn-gap{margin-left:12px}
+
+/* Contact button: distinct visual style to avoid confusion with CTAs */
+.btn-contact{background:#fff;color:var(--blue-700);border:1px solid var(--blue-100);box-shadow:0 2px 8px rgba(11,111,164,0.06);border-radius:8px;padding:10px 14px;font-weight:700}
 .btn-large{padding:14px 20px;border-radius:10px}
 .hero-cta{margin-top:8px;padding:12px 18px}
 .hero-cta-row{display:flex;gap:12px;align-items:center;margin-top:8px}
