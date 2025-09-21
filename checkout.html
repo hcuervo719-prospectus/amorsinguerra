@@ -105,53 +105,25 @@
   </footer>
 
   <script>
-    // Read price from URL query param ?price (in COP without currency symbol) and update displays
     (function(){
       function getParam(name){
         const params = new URLSearchParams(window.location.search);
         return params.get(name);
       }
       const priceParam = getParam('price');
-      const priceValue = priceParam ? priceParam : '119000';
-      // Format as currency with thousands separator
-      function formatCOP(n){
-        return '$' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      const priceValue = priceParam ? priceParam : '9';
+
+      function formatUSD(n){
+        return '$' + n + (String(n).indexOf('.') === -1 ? '' : '') + ' USD';
       }
-      const formatted = formatCOP(priceValue);
-      document.getElementById('price-display').textContent = formatted;
-      document.getElementById('total-display').textContent = formatted;
-      document.getElementById('price-in-instructions').textContent = formatted;
+      const formatted = formatUSD(priceValue);
+      const priceEl = document.getElementById('price-display');
+      const totalEl = document.getElementById('total-display');
+      if(priceEl) priceEl.textContent = formatted;
+      if(totalEl) totalEl.textContent = formatted;
       document.getElementById('price-field').value = priceValue;
 
-      // Handle stage param for pre-selection
-      const stageParam = getParam('stage');
-      if(stageParam){
-        const stages = [
-          { id: '1', label: 'Etapa 1', deadline: '11 octubre' },
-          { id: '2', label: 'Etapa 2', deadline: '18 octubre' },
-          { id: '3', label: 'Etapa 3', deadline: '25 octubre' },
-          { id: '4', label: 'Etapa 4', deadline: '1 noviembre' },
-          { id: '5', label: 'Etapa 5', deadline: '8 noviembre' },
-          { id: '6', label: 'Etapa 6', deadline: '15 noviembre' }
-        ];
-        const stageObj = stages.find(s => s.id === stageParam.toString());
-        const productLine = document.getElementById('product-line');
-        const stageInfo = document.getElementById('stage-info');
-        const stageField = document.getElementById('stage-field');
-        if(stageField) stageField.value = stageParam;
-        if(productLine){
-          if(stageObj){
-            productLine.innerHTML = '<strong>Producto:</strong> Serie Amor Sin Guerra - ' + stageObj.label;
-            if(stageInfo) stageInfo.textContent = stageObj.label + ' · Hasta ' + stageObj.deadline;
-          } else if(stageParam === 'final'){
-            productLine.innerHTML = '<strong>Producto:</strong> Serie Amor Sin Guerra - Acceso Digital (Precio final)';
-            if(stageInfo) stageInfo.textContent = 'Precio final aplicado';
-            if(stageField) stageField.value = 'final';
-          }
-        }
-      }
-
-      // If there are other query params (utm_source, etc.) they will be forwarded by the form via GET.
+      // Forward any utm or other params if needed (handled by form attributes)
     })();
   </script>
 
