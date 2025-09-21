@@ -225,8 +225,8 @@
             // If public key is present, use MercadoPago JS SDK to open checkout
             if(publicKey && window.MercadoPago && json && json.id){
               try{
-                const mpSdk = new MercadoPago(publicKey, { locale: 'es-AR' });
-                mpSdk.checkout({ preference: { id: json.id } });
+                const mercadopagoSdk = new MercadoPago(publicKey, { locale: 'es-AR' });
+                mercadopagoSdk.checkout({ preference: { id: json.id } });
                 return;
               }catch(e){
                 console.error('MercadoPago SDK checkout failed:', e);
