@@ -75,7 +75,7 @@
       <h3 class="section-title">Resultados reales en parejas reales</h3>
       <div class="testimonials">
         <blockquote class="testimonial">
-          <p>“Antes nos atacábamos y evitábamos temas clave. Con las técnicas aprendimos a escuchar y a reconectar — llevamos 6 meses sin peleas que terminen en distanciamiento.”</p>
+          <p>��Antes nos atacábamos y evitábamos temas clave. Con las técnicas aprendimos a escuchar y a reconectar — llevamos 6 meses sin peleas que terminen en distanciamiento.”</p>
           <cite>— Laura & Miguel, Madrid</cite>
         </blockquote>
         <blockquote class="testimonial">
@@ -227,9 +227,16 @@
     </footer>
   </main>
   <script>
-    (function(){
-      // Manual counter for Plan Pioneros (edit this value to update available slots)
-      const pionerosRemaining = 26;
+    (async function(){
+      // Load centralized Pioneros data
+      let pionerosData = { remaining: 26, limit: 50 };
+      try{
+        const res = await fetch('/data/pioneros.json');
+        if(res.ok) pionerosData = await res.json();
+      }catch(err){ console.warn('Could not load pioneros data', err); }
+
+      const pionerosRemaining = Number(pionerosData.remaining || 0);
+      const pionerosLimit = Number(pionerosData.limit || 50);
       const pionerosEl = document.getElementById('pioneros-count');
       if(pionerosEl) pionerosEl.textContent = pionerosRemaining;
 
@@ -255,13 +262,12 @@
       const now = new Date();
       let currentStage = null;
 
-      // If pioneeros are finished, allow Etapa 1 even if its start date is in the future
+      // If pioneers are exhausted, allow Etapa 1 even if its start date is in the future
       const allowEarlyStage1 = pionerosRemaining <= 0;
 
       for(const s of stages){
-        // If pioneers are exhausted and this is stage 1 and now is before its start, treat it as active
         if(allowEarlyStage1 && s.id === 1){
-          if(now <= s.end) { currentStage = s; break; }
+          if(now <= s.end){ currentStage = s; break; }
           continue;
         }
         if(now >= s.start && now <= s.end){ currentStage = s; break; }
@@ -293,18 +299,15 @@
         const stageId = el.getAttribute('data-stage');
         const stageObj = stages.find(s => String(s.id) === String(stageId));
 
-        // If Pioneros are active, hide purchase buttons for all stages
         if(pionerosRemaining > 0){
           if(btn) btn.style.display = 'none';
         } else {
-          // Show and ensure hrefs are correct
           if(btn){
             btn.style.display = '';
             if(stageObj) btn.setAttribute('href', 'checkout.html?stage=' + stageObj.id + '&price=' + stageObj.price);
           }
         }
 
-        // Mark finished stages and remove their buttons
         if(stageObj && now > stageObj.end){
           const h = el.querySelector('.stage-title');
           if(h && !/Finalizada/i.test(h.textContent)) h.textContent = h.textContent + ' — Finalizada';
@@ -321,15 +324,12 @@
         const text = 'Reserva tu cupo - ' + currentStage.label;
         const href = 'checkout.html?stage=' + currentStage.id + '&price=' + currentStage.price;
         setCTAs(text, href);
-        // update offer display price only when not showing Pioneros
         const priceStrong = document.querySelector('.offer-price strong');
         if(priceStrong) priceStrong.textContent = '$' + currentStage.price + ' USD';
         const offerNote = document.querySelector('.offer-card .small-muted');
         if(offerNote) offerNote.textContent = currentStage.label + ': ' + currentStage.start.toLocaleDateString() + ' - ' + currentStage.end.toLocaleDateString();
       } else {
-        // Prelaunch / after stages
         setCTAs('Reserva tu cupo - Preventa', 'checkout.html?price=' + finalPrice);
-        // Do not overwrite the Plan Pioneros price display here so the $9 USD message remains visible.
       }
 
       // Update Pioneros counter visibility/status
@@ -339,7 +339,7 @@
         if(pionerosRemaining <= 0){
           pionerosCounter.innerHTML = '<strong>PLAN PIONEROS AGOTADO</strong>';
         } else {
-          if(pionerosCountEl) pionerosCountEl.textContent = pionerosRemaining;
+          if(pionerosCountEl) pionerosCountEl.textContent = pionerosRemaining + '';
         }
       }
 
