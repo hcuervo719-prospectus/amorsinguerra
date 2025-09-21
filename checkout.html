@@ -187,6 +187,44 @@
     })();
   </script>
 
+  <!-- Mercado Pago SDK -->
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <script>
+    (function(){
+      const mpBtn = document.getElementById('mp-pay-btn');
+      if(!mpBtn) return;
+      mpBtn.addEventListener('click', async function(e){
+        e.preventDefault();
+        const form = document.querySelector('.checkout-form');
+        if(!form) return;
+        // Collect form data
+        const fd = new FormData(form);
+        const payload = {};
+        fd.forEach((v,k)=> payload[k]=v);
+        // Call Netlify Function to create preference
+        try{
+          const res = await fetch('/.netlify/functions/create_mp_preference', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const json = await res.json();
+          if(json && json.id){
+            // Initialize MercadoPago with public key from env substitution
+            const mp = new MercadoPago('REPLACE_ENV.MP_PUBLIC_KEY', { locale: 'es-AR' });
+            mp.checkout({ preference: { id: json.id } });
+            return;
+          }
+          // Fallback redirect
+          window.location.href = 'https://link.mercadopago.com/amorsinguerra';
+        }catch(err){
+          console.error(err);
+          window.location.href = 'https://link.mercadopago.com/amorsinguerra';
+        }
+      });
+    })();
+  </script>
+
   <!-- Analytics placeholders: add Facebook Pixel ID and Google Analytics Measurement ID later -->
 </body>
 </html>
