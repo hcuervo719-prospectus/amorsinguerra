@@ -64,6 +64,29 @@
       <div class="payment-methods-container">
         <h3>Métodos de Pago Disponibles</h3>
 
+        <h3>Elige tu país y verifica el monto exacto:</h3>
+        <select id="country-selector" class="form-input">
+          <option value="">Selecciona tu país</option>
+          <option value="mx">🇲🇽 México - $180 MXN</option>
+          <option value="ar">🇦🇷 Argentina - $9,000 ARS</option>
+          <option value="co">🇨🇴 Colombia - $37,000 COP</option>
+          <option value="br">🇧🇷 Brasil - R$ 50 BRL</option>
+          <option value="cl">🇨🇱 Chile - $8,500 CLP</option>
+          <option value="pe">🇵🇪 Perú - S/ 34 PEN</option>
+          <option value="uy">🇺🇾 Uruguay - $390 UYU</option>
+        </select>
+
+        <div id="payment-info" style="margin-top:15px; display:none;">
+          <div class="payment-method" style="border: 1px solid #ddd; padding: 15px;">
+            <h4 id="country-name">País seleccionado</h4>
+            <p><strong>Monto exacto a pagar:</strong> <span id="local-amount"></span></p>
+            <a id="mercadopago-link" href="https://link.mercadopago.com.co/amorsinguerra" target="_blank" rel="noopener" class="btn-primary">
+              Pagar con MercadoPago
+            </a>
+            <p class="small-muted">Verifica que el monto en MercadoPago coincida con el mostrado arriba</p>
+          </div>
+        </div>
+
         <div class="payment-method">
           <h4>💳 MercadoPago (Latinoamérica)</h4>
           <p><strong>Paso 1:</strong> Completa el formulario arriba</p>
