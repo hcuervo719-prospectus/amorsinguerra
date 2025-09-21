@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Redirigiendo a MercadoPago…</title>
+  <link rel="stylesheet" href="styles/landing.css">
+</head>
+<body class="page-root">
+  <main class="container">
+    <h2 class="section-title">Redirigiendo a MercadoPago</h2>
+    <p class="small-muted">Si no ves la redirección automáticamente, haz clic en el botón.</p>
+    <p id="debug"></p>
+    <a id="manual" class="btn-primary" href="#">Ir a MercadoPago</a>
+  </main>
+
+  <script>
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const fullname = params.get('fullname') || '';
+      const email = params.get('email') || '';
+      const whatsapp = params.get('whatsapp') || '';
+      const price = params.get('price') || '9';
+
+      // MercadoPago link (public pref link). Append info for record-keeping if supported.
+      const mpBase = 'https://link.mercadopago.com/amorsinguerra';
+      const returnUrl = location.origin + '/confirmacion.html';
+      const mpUrl = mpBase + '?amount=' + encodeURIComponent(price) + '&metadata=' + encodeURIComponent(fullname + '|' + email + '|' + whatsapp) + '&return=' + encodeURIComponent(returnUrl);
+
+      document.getElementById('manual').href = mpUrl;
+      document.getElementById('debug').textContent = 'Preparando pago de $' + price + ' USD para: ' + fullname;
+
+      setTimeout(function(){ window.location.href = mpUrl; }, 800);
+    })();
+  </script>
+</body>
+</html>
