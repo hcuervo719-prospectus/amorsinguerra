@@ -207,7 +207,7 @@
           if(!form) return alert('Completa el formulario antes de pagar');
           const payload = await collectFormPayload();
           try{
-            const res = await fetch('/.netlify/functions/create_mp_preference', {
+            const res = await fetch('/.netlify/functions/create_mercadopago_preference', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(payload)
