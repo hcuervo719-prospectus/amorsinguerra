@@ -99,9 +99,27 @@
         <div class="payment-method">
           <h4>🌍 PayPal (Internacional)</h4>
           <p><strong>Paso 1:</strong> Completa el formulario arriba</p>
-          <p><strong>Paso 2:</strong> Envía $9 USD por PayPal a: <strong>hcuervo719@gmail.com</strong></p>
-          <p><strong>Paso 3:</strong> En el mensaje incluye: "Amor Sin Guerra + [tu nombre] + [tu email]"</p>
-          <p><strong>Paso 4:</strong> Confirma por email: <strong>info@amorsinguerra.com</strong></p>
+          <p><strong>Paso 2:</strong> Si prefieres pagar directamente desde PayPal, usa el botón seguro abajo o el enlace público.</p>
+
+          <!-- PayPal hosted button container (provided by PayPal) -->
+          <div id="paypal-container-L2AMRF4WA9ZDW" style="margin:10px 0;"></div>
+          <script>
+            try{
+              if(window.paypal && paypal.HostedButtons){
+                paypal.HostedButtons({ hostedButtonId: "L2AMRF4WA9ZDW" }).render("#paypal-container-L2AMRF4WA9ZDW");
+              } else {
+                // SDK not loaded yet or blocked, show fallback link
+                var fallback = document.createElement('div');
+                fallback.innerHTML = '<a class="btn-secondary" href="https://www.paypal.com/ncp/payment/L2AMRF4WA9ZDW" target="_blank" rel="noopener">Pagar $9 USD - PayPal</a>';
+                document.getElementById('paypal-container-L2AMRF4WA9ZDW').appendChild(fallback);
+              }
+            }catch(e){
+              console.warn('PayPal Hosted Button render failed', e);
+            }
+          </script>
+
+          <p style="margin-top:8px;"><strong>Paso 3:</strong> Si quieres enviar manualmente: envía $9 USD por PayPal a: <strong>hcuervo719@gmail.com</strong></p>
+          <p><strong>Paso 4:</strong> En el mensaje incluye: "Amor Sin Guerra + [tu nombre] + [tu email]" y confirma por email: <strong>info@amorsinguerra.com</strong></p>
         </div>
 
         <p class="small-muted"><strong>Confirmación:</strong> Recibirás acceso en 24 horas tras validar tu pago.</p>
