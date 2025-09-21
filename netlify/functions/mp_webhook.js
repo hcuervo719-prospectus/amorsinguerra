@@ -47,7 +47,7 @@ exports.handler = async function(event, context) {
 
     if(!resp.ok){
       const txt = await resp.text();
-      return { statusCode: resp.status, body: JSON.stringify({ error: 'MP fetch failed', details: txt }) };
+      return { statusCode: resp.status, body: JSON.stringify({ error: 'MercadoPago fetch failed', details: txt }) };
     }
 
     const payment = await resp.json();
