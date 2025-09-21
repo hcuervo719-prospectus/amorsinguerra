@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Redirigiendo a PayPal…</title>
+  <link rel="stylesheet" href="styles/landing.css">
+</head>
+<body class="page-root">
+  <main class="container">
+    <h2 class="section-title">Redirigiendo a PayPal</h2>
+    <p class="small-muted">Si no ves la redirección automáticamente, haz clic en el botón.</p>
+    <p id="debug"></p>
+    <a id="manual" class="btn-primary" href="#">Ir a PayPal</a>
+  </main>
+
+  <script>
+    (function(){
+      // Read query params from URL (form submitted with GET)
+      const params = new URLSearchParams(window.location.search);
+      const fullname = params.get('fullname') || '';
+      const email = params.get('email') || '';
+      const whatsapp = params.get('whatsapp') || '';
+      const price = params.get('price') || '9';
+
+      // Construct PayPal checkout URL (basic redirect for demo). In production, use server-side checkout creation.
+      const returnUrl = location.origin + '/confirmacion.html';
+      const paypalUrl = 'https://www.paypal.com/checkoutnow?amount=' + encodeURIComponent(price) + '&custom=' + encodeURIComponent(fullname + '|' + email + '|' + whatsapp) + '&return=' + encodeURIComponent(returnUrl);
+
+      document.getElementById('manual').href = paypalUrl;
+      document.getElementById('debug').textContent = 'Preparando pago de $' + price + ' USD para: ' + fullname;
+
+      // Redirect after short delay
+      setTimeout(function(){ window.location.href = paypalUrl; }, 800);
+    })();
+  </script>
+</body>
+</html>
