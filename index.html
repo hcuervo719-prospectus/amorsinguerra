@@ -228,6 +228,11 @@
   </main>
   <script>
     (function(){
+      // Manual counter for Plan Pioneros (edit this value to update available slots)
+      const pionerosRemaining = 20;
+      const pionerosEl = document.getElementById('pioneros-count');
+      if(pionerosEl) pionerosEl.textContent = pionerosRemaining;
+
       // Stages definition (UTC local dates)
       const stages = [
         { id: 1, start: new Date(2025,9,4,0,0,0), end: new Date(2025,9,17,23,59,59), price: 19, label: 'Etapa 1', bonus: 5 },
@@ -272,14 +277,16 @@
         });
       }
 
-      // If plan pioneros explicitly requested, point CTAs to pioneeros
-      if(planParam === 'pioneros'){
+      // Priority: if pioneros available, show Pioneros unless explicitly forcing stage
+      if(pionerosRemaining > 0 && planParam !== 'force_stage'){
+        setCTAs('Reserva tu Cupo Pioneros', 'checkout.html?plan=pioneros&price=9');
+      } else if(planParam === 'pioneros'){
         setCTAs('Reserva tu Cupo Pioneros', 'checkout.html?plan=pioneros&price=9');
       } else if(currentStage){
         const text = 'Reserva tu cupo - ' + currentStage.label;
         const href = 'checkout.html?stage=' + currentStage.id + '&price=' + currentStage.price;
         setCTAs(text, href);
-        // update offer display price
+        // update offer display price only when not showing Pioneros
         const priceStrong = document.querySelector('.offer-price strong');
         if(priceStrong) priceStrong.textContent = '$' + currentStage.price + ' USD';
         const offerNote = document.querySelector('.offer-card .small-muted');
@@ -288,6 +295,17 @@
         // Prelaunch / after stages
         setCTAs('Reserva tu cupo - Preventa', 'checkout.html?price=' + finalPrice);
         // Do not overwrite the Plan Pioneros price display here so the $9 USD message remains visible.
+      }
+
+      // Update Pioneros counter visibility/status
+      const pionerosCounter = document.querySelector('.pioneros-counter');
+      const pionerosCountEl = document.getElementById('pioneros-count');
+      if(pionerosCounter){
+        if(pionerosRemaining <= 0){
+          pionerosCounter.innerHTML = '<strong>PLAN PIONEROS AGOTADO</strong>';
+        } else {
+          if(pionerosCountEl) pionerosCountEl.textContent = pionerosRemaining;
+        }
       }
 
       if(contactBtn){ contactBtn.textContent = 'Enviar consulta'; }
