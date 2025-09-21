@@ -189,6 +189,24 @@
   <!-- Mercado Pago SDK -->
   <script src="https://sdk.mercadopago.com/js/v2"></script>
   <script>
+    // Load public key from serverless function into the meta tag so the SDK can initialize
+    (async function loadMercadoPagoPublicKey(){
+      try{
+        const meta = document.querySelector('meta[name="mercadopago-public-key"]');
+        if(meta && !meta.content){
+          const r = await fetch('/.netlify/functions/get_mercadopago_public_key');
+          if(r.ok){
+            const j = await r.json();
+            if(j && j.publicKey){
+              meta.content = j.publicKey;
+            }
+          } else {
+            console.warn('Could not load MERCADOPAGO public key');
+          }
+        }
+      }catch(e){ console.warn('Error loading MercadoPago public key', e); }
+    })();
+
     (function(){
       const mercadopagoBtn = document.getElementById('mercadopago-pay-btn');
       const paypalBtn = document.getElementById('paypal-pay-btn');
