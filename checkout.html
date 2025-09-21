@@ -192,36 +192,61 @@
   <script>
     (function(){
       const mpBtn = document.getElementById('mp-pay-btn');
-      if(!mpBtn) return;
-      mpBtn.addEventListener('click', async function(e){
-        e.preventDefault();
-        const form = document.querySelector('.checkout-form');
-        if(!form) return;
-        // Collect form data
+      const ppBtn = document.getElementById('pp-pay-btn');
+      const form = document.querySelector('.checkout-form');
+
+      async function collectFormPayload(){
         const fd = new FormData(form);
         const payload = {};
         fd.forEach((v,k)=> payload[k]=v);
-        // Call Netlify Function to create preference
-        try{
-          const res = await fetch('/.netlify/functions/create_mp_preference', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          const json = await res.json();
-          if(json && json.id){
-            // Initialize MercadoPago with public key from env substitution
-            const mp = new MercadoPago('REPLACE_ENV.MP_PUBLIC_KEY', { locale: 'es-AR' });
-            mp.checkout({ preference: { id: json.id } });
-            return;
+        return payload;
+      }
+
+      if(mpBtn){
+        mpBtn.addEventListener('click', async function(e){
+          e.preventDefault();
+          if(!form) return alert('Completa el formulario antes de pagar');
+          const payload = await collectFormPayload();
+          try{
+            const res = await fetch('/.netlify/functions/create_mp_preference', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            if(!res.ok) throw new Error('No se pudo crear preferencia');
+            const json = await res.json();
+            if(json && json.id){
+              const mp = new MercadoPago('REPLACE_ENV.MP_PUBLIC_KEY', { locale: 'es-AR' });
+              mp.checkout({ preference: { id: json.id } });
+              return;
+            }
+            alert('Error iniciando Mercado Pago. Intenta nuevamente o contacta soporte.');
+          }catch(err){
+            console.error('MP error', err);
+            alert('Error iniciando Mercado Pago. Intenta nuevamente o contacta soporte.');
           }
-          // Fallback redirect
-          window.location.href = 'https://link.mercadopago.com/amorsinguerra';
-        }catch(err){
-          console.error(err);
-          window.location.href = 'https://link.mercadopago.com/amorsinguerra';
-        }
-      });
+        });
+      }
+
+      if(ppBtn){
+        ppBtn.addEventListener('click', async function(e){
+          e.preventDefault();
+          if(!form) return alert('Completa el formulario antes de pagar');
+          const payload = await collectFormPayload();
+          const params = new URLSearchParams(payload).toString();
+          // Redirect to paypal redirect page with query params
+          window.location.href = 'paypal-redirect.html?' + params;
+        });
+      }
+
+      // Auto-trigger if method param present
+      (function(){
+        const params = new URLSearchParams(window.location.search);
+        const method = params.get('method');
+        if(method === 'mercadopago' && mpBtn){ mpBtn.click(); }
+        if(method === 'paypal' && ppBtn){ ppBtn.click(); }
+      })();
+
     })();
   </script>
 
