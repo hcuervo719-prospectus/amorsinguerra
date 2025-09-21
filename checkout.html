@@ -155,6 +155,10 @@
       const priceField = document.getElementById('price-field');
       if(priceField) priceField.value = priceValue;
 
+      // Render manual Pioneros counter (update this value manually when slots change)
+      const pionerosCountCheckout = document.getElementById('pioneros-count-checkout');
+      if(pionerosCountCheckout){ pionerosCountCheckout.textContent = '20'; }
+
       // Forward any utm or other params if needed
     })();
   </script>
