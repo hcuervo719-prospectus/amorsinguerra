@@ -89,7 +89,7 @@
         <!-- BOTONES DE PAGO AL FINAL -->
         <div style="margin-top:20px;">
           <button type="button" id="mp-pay-btn" class="btn-primary btn-large">Pagar con MercadoPago — $9 USD (Latinoamérica)</button>
-          <button type="submit" formaction="paypal-redirect.html" class="btn-secondary btn-gap">
+          <button type="button" id="pp-pay-btn" class="btn-secondary btn-gap">
             Pagar con PayPal — $9 USD (Internacional)
           </button>
         </div>
@@ -213,13 +213,37 @@
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(payload)
             });
-            if(!res.ok) throw new Error('No se pudo crear preferencia');
+            if(!res.ok){
+              const text = await res.text();
+              console.error('MP preference creation failed:', text);
+              throw new Error('No se pudo crear preferencia');
+            }
             const json = await res.json();
-            if(json && json.id){
-              const mp = new MercadoPago('REPLACE_ENV.MP_PUBLIC_KEY', { locale: 'es-AR' });
-              mp.checkout({ preference: { id: json.id } });
+            // Try to read public key from meta tag (set this in your deploy or page head)
+            const metaKey = document.querySelector('meta[name="mp-public-key"]');
+            const publicKey = metaKey ? metaKey.content : null;
+
+            // If public key is present, use MercadoPago JS SDK to open checkout
+            if(publicKey && window.MercadoPago && json && json.id){
+              try{
+                const mp = new MercadoPago(publicKey, { locale: 'es-AR' });
+                mp.checkout({ preference: { id: json.id } });
+                return;
+              }catch(e){
+                console.error('MP SDK checkout failed:', e);
+                // Fallthrough to redirect fallback below
+              }
+            }
+
+            // Fallback: redirect to server-provided init_point (or to redirect page)
+            if(json && json.init_point){
+              // Preserve form data in query string for redirect page
+              const params = new URLSearchParams(payload).toString();
+              const url = 'mercadopago-redirect.html?init_point=' + encodeURIComponent(json.init_point) + (params ? '&' + params : '');
+              window.location.href = url;
               return;
             }
+
             alert('Error iniciando Mercado Pago. Intenta nuevamente o contacta soporte.');
           }catch(err){
             console.error('MP error', err);
