@@ -109,20 +109,51 @@
         const params = new URLSearchParams(window.location.search);
         return params.get(name);
       }
+      // Stages definition for checkout defaults
+      const stages = [
+        { id: '1', price: '19', label: 'Etapa 1', start: new Date(2025,9,4), end: new Date(2025,9,17) },
+        { id: '2', price: '29', label: 'Etapa 2', start: new Date(2025,9,18), end: new Date(2025,9,31) },
+        { id: '3', price: '39', label: 'Etapa 3', start: new Date(2025,10,1), end: new Date(2025,10,14) },
+        { id: '4', price: '49', label: 'Etapa 4', start: new Date(2025,10,15), end: new Date(2025,10,28) },
+        { id: '5', price: '59', label: 'Etapa 5', start: new Date(2025,10,29), end: new Date(2025,11,12) },
+        { id: '6', price: '69', label: 'Etapa 6', start: new Date(2025,11,13), end: new Date(2025,11,20) }
+      ];
+
       const priceParam = getParam('price');
-      const priceValue = priceParam ? priceParam : '9';
+      const stageParam = getParam('stage');
+      const planParam = getParam('plan');
+
+      let priceValue = priceParam ? priceParam : null;
+
+      // If stage param provided and no price, derive price from stage map
+      if(!priceValue && stageParam){
+        const s = stages.find(x => x.id === String(stageParam));
+        if(s) priceValue = s.price;
+        // set stage-field
+        const stageField = document.getElementById('stage-field');
+        if(stageField) stageField.value = stageParam;
+        const stageInfo = document.getElementById('stage-info');
+        if(stageInfo && s) stageInfo.textContent = s.label + ' · $' + s.price + ' USD';
+      }
+
+      // If still no price, fallback to pioneros or default
+      if(!priceValue){
+        if(planParam === 'pioneros') priceValue = '9';
+        else priceValue = '90';
+      }
 
       function formatUSD(n){
-        return '$' + n + (String(n).indexOf('.') === -1 ? '' : '') + ' USD';
+        return '$' + n + ' USD';
       }
       const formatted = formatUSD(priceValue);
       const priceEl = document.getElementById('price-display');
       const totalEl = document.getElementById('total-display');
       if(priceEl) priceEl.textContent = formatted;
       if(totalEl) totalEl.textContent = formatted;
-      document.getElementById('price-field').value = priceValue;
+      const priceField = document.getElementById('price-field');
+      if(priceField) priceField.value = priceValue;
 
-      // Forward any utm or other params if needed (handled by form attributes)
+      // Forward any utm or other params if needed
     })();
   </script>
 
