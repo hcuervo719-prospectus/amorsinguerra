@@ -59,24 +59,16 @@
       </div>
 
       <div class="payment-section">
-        <h3>Pago seguro con Bancolombia</h3>
+        <h3>Elige tu región y método de pago</h3>
 
-        <div class="payment-transparency">
-          <h4>Pago directo al desarrollador</h4>
-          <p>Henry Cuervo, Psicólogo UPB - Desarrollador de la metodología</p>
-          <p class="small-text">Transferencia segura a cuenta personal verificada</p>
+        <p class="small-muted">Selecciona la opción que aplique a tu región. Precio especial Plan Pioneros: <strong>$9 USD</strong>.</p>
+
+        <div class="payment-buttons" style="margin-top:12px">
+          <a class="btn-primary btn-large" href="https://link.mercadopago.com/amorsinguerra" target="_blank" rel="noopener">Pagar con MercadoPago — $9 USD (Latinoamérica)</a>
+          <a class="btn-secondary btn-gap" href="https://www.paypal.com/checkoutnow">Pagar con PayPal — $9 USD (Internacional)</a>
         </div>
 
-        <div class="qr-wrapper">
-          <img id="banco-qr" src="https://cdn.builder.io/api/v1/image/assets%2Fb7400011ae9a4ecca8c90d62243bba6c%2F43e01c299749462d96dd1e08d9f1a40a?format=webp&width=800" alt="Código QR Bancolombia" />
-        </div>
-
-        <p class="qr-instructions">Escanea el código QR con tu app bancaria</p>
-        <ol class="qr-steps">
-          <li>Abre tu app bancaria</li>
-          <li>Escanea el código</li>
-          <li>Confirma el pago por <span id="price-in-instructions">$119,000</span> COP</li>
-        </ol>
+        <p class="small-muted" style="margin-top:12px">Si eliges PayPal serás redirigido para completar el pago. Después vuelve a esta página y completa la confirmación si es necesario.</p>
       </div>
 
       <form class="confirm-form" name="checkout" method="POST" data-netlify="true" enctype="multipart/form-data" action="confirmacion.html">
