@@ -227,28 +227,70 @@
   </main>
   <script>
     (function(){
-      // Simple CTA for Plan Pioneros
-      const ctaText = 'Reserva tu Cupo Pioneros';
-      const ctaHref = 'checkout.html?plan=pioneros&price=9';
+      // Stages definition (UTC local dates)
+      const stages = [
+        { id: 1, start: new Date(2025,9,4,0,0,0), end: new Date(2025,9,17,23,59,59), price: 19, label: 'Etapa 1', bonus: 5 },
+        { id: 2, start: new Date(2025,9,18,0,0,0), end: new Date(2025,9,31,23,59,59), price: 29, label: 'Etapa 2', bonus: 4 },
+        { id: 3, start: new Date(2025,10,1,0,0,0), end: new Date(2025,10,14,23,59,59), price: 39, label: 'Etapa 3', bonus: 3 },
+        { id: 4, start: new Date(2025,10,15,0,0,0), end: new Date(2025,10,28,23,59,59), price: 49, label: 'Etapa 4', bonus: 2 },
+        { id: 5, start: new Date(2025,10,29,0,0,0), end: new Date(2025,11,12,23,59,59), price: 59, label: 'Etapa 5', bonus: 1 },
+        { id: 6, start: new Date(2025,11,13,0,0,0), end: new Date(2025,11,20,23,59,59), price: 69, label: 'Etapa 6', bonus: 0 }
+      ];
+      const finalPrice = 90;
+
+      function getParam(name){
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+
+      const planParam = getParam('plan');
+      const stageParam = getParam('stage');
+
+      const now = new Date();
+      let currentStage = null;
+      for(const s of stages){
+        if(now >= s.start && now <= s.end){ currentStage = s; break; }
+      }
+
+      // If stage param is provided, prefer it
+      if(stageParam){
+        const forced = stages.find(s => String(s.id) === String(stageParam));
+        if(forced) currentStage = forced;
+      }
 
       const headerCta = document.querySelector('.header-cta .btn-primary');
       const heroCta = document.querySelector('.hero .hero-cta');
       const offerCta = document.querySelector('.offer-card .btn-primary');
       const contactBtn = document.querySelector('.lead-form button');
 
-      [headerCta, heroCta, offerCta].forEach(a => {
-        if(!a) return;
-        a.textContent = ctaText;
-        a.setAttribute('href', ctaHref);
-      });
+      function setCTAs(text, href){
+        [headerCta, heroCta, offerCta].forEach(a => {
+          if(!a) return;
+          a.textContent = text;
+          a.setAttribute('href', href);
+        });
+      }
+
+      // If plan pioneros explicitly requested, point CTAs to pioneeros
+      if(planParam === 'pioneros'){
+        setCTAs('Reserva tu Cupo Pioneros', 'checkout.html?plan=pioneros&price=9');
+      } else if(currentStage){
+        const text = 'Reserva tu cupo - ' + currentStage.label;
+        const href = 'checkout.html?stage=' + currentStage.id + '&price=' + currentStage.price;
+        setCTAs(text, href);
+        // update offer display price
+        const priceStrong = document.querySelector('.offer-price strong');
+        if(priceStrong) priceStrong.textContent = '$' + currentStage.price + ' USD';
+        const offerNote = document.querySelector('.offer-card .small-muted');
+        if(offerNote) offerNote.textContent = currentStage.label + ': ' + currentStage.start.toLocaleDateString() + ' - ' + currentStage.end.toLocaleDateString();
+      } else {
+        // Prelaunch / after stages
+        setCTAs('Reserva tu cupo - Preventa', 'checkout.html?price=' + finalPrice);
+        const priceStrong = document.querySelector('.offer-price strong');
+        if(priceStrong) priceStrong.textContent = '$' + finalPrice + ' USD';
+      }
 
       if(contactBtn){ contactBtn.textContent = 'Enviar consulta'; }
-
-      // Update offer price displays to show USD if present
-      const priceStrong = document.querySelector('.offer-price strong');
-      if(priceStrong){ priceStrong.textContent = '$9 USD'; }
-      const offerNote = document.querySelector('.offer-card .small-muted');
-      if(offerNote) offerNote.textContent = 'Oferta limitada: primeros 20 parejas — acceso completo';
 
     })();
   </script>
