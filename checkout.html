@@ -67,15 +67,10 @@
 
         <div class="pioneros-counter" aria-live="polite" style="margin-top:8px">Quedan sólo <span id="pioneros-count-checkout">26</span> cupos</div>
 
-        <div class="payment-buttons" style="margin-top:12px">
-          <a class="btn-primary btn-large" href="https://link.mercadopago.com/amorsinguerra" target="_blank" rel="noopener">Pagar con MercadoPago — $9 USD (Latinoamérica)</a>
-          <a class="btn-secondary btn-gap" href="https://www.paypal.com/checkoutnow">Pagar con PayPal — $9 USD (Internacional)</a>
-        </div>
-
-        <p class="small-muted" style="margin-top:12px">Si eliges PayPal serás redirigido para completar el pago. Después vuelve a esta página y completa la confirmación si es necesario.</p>
+        <p class="small-muted" style="margin-top:12px">Para completar la compra primero ingresa tus datos en el formulario de abajo y luego elige el método de pago. Serás redirigido al proveedor de pago y luego volverás a la página de confirmación.</p>
       </div>
 
-      <form class="confirm-form" name="checkout" method="POST" data-netlify="true" enctype="multipart/form-data" action="confirmacion.html">
+      <form class="confirm-form checkout-form" name="checkout" method="GET" data-netlify="true" enctype="multipart/form-data" action="confirmacion.html">
         <input type="hidden" name="form-name" value="checkout" />
         <h3>Confirmación</h3>
         <label for="fullname">Nombre completo de la pareja</label>
