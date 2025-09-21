@@ -2,13 +2,13 @@ const fs = require('fs');
 
 // Netlify Function to receive Mercado Pago webhooks (IPN)
 // Configure your Mercado Pago webhook URL to: https://<your-site>/.netlify/functions/mp_webhook
-// Requires MP_ACCESS_TOKEN env variable (server-side secret)
+// Requires MERCADOPAGO_ACCESS_TOKEN env variable (server-side secret)
 
 exports.handler = async function(event, context) {
   try{
-    const ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN;
+    const ACCESS_TOKEN = process.env.MERCADOPAGO_ACCESS_TOKEN;
     if(!ACCESS_TOKEN){
-      return { statusCode: 500, body: JSON.stringify({ error: 'Missing MP_ACCESS_TOKEN' }) };
+      return { statusCode: 500, body: JSON.stringify({ error: 'Missing MERCADOPAGO_ACCESS_TOKEN' }) };
     }
 
     // Mercado Pago may send notifications as GET with query params or POST with JSON body
