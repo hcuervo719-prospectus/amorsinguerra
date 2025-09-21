@@ -1,18 +1,17 @@
 // Netlify Function to create Mercado Pago preference
-// Requires environment variable MP_ACCESS_TOKEN (Mercado Pago Access Token)
+// Requires environment variable MERCADOPAGO_ACCESS_TOKEN (Mercado Pago Access Token)
 
 exports.handler = async function(event, context) {
   try {
     const body = event.body ? JSON.parse(event.body) : {};
     const { fullname = '', email = '', whatsapp = '', price = '9', stage = '' } = body;
 
-    // Support multiple possible env var names for the Mercado Pago access token
-    // Prefer MP_ACCESS_TOKEN but fall back to other common names if present
-    const ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN || process.env.MERCADOPAGO_ACCESS_TOKEN || process.env.MERCADO_PAGO_ACCESS_TOKEN;
+    // Read the Mercado Pago access token from the canonical env var name
+    const ACCESS_TOKEN = process.env.MERCADOPAGO_ACCESS_TOKEN;
     if(!ACCESS_TOKEN){
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: 'Missing MP_ACCESS_TOKEN environment variable' })
+        body: JSON.stringify({ error: 'Missing MERCADOPAGO_ACCESS_TOKEN environment variable' })
       };
     }
 
