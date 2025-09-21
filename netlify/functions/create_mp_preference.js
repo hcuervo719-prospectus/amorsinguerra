@@ -6,7 +6,9 @@ exports.handler = async function(event, context) {
     const body = event.body ? JSON.parse(event.body) : {};
     const { fullname = '', email = '', whatsapp = '', price = '9', stage = '' } = body;
 
-    const ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN;
+    // Support multiple possible env var names for the Mercado Pago access token
+    // Prefer MP_ACCESS_TOKEN but fall back to other common names if present
+    const ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN || process.env.MERCADOPAGO_ACCESS_TOKEN || process.env.MERCADO_PAGO_ACCESS_TOKEN;
     if(!ACCESS_TOKEN){
       return {
         statusCode: 500,
