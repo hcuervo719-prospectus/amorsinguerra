@@ -61,14 +61,25 @@
         <p><strong>Total:</strong> <span id="total-display">$9</span> <span class="currency">USD</span></p>
       </div>
 
-      <div class="payment-section">
-        <h3>Elige tu región y método de pago</h3>
+      <div class="payment-methods-container">
+        <h3>Métodos de Pago Disponibles</h3>
 
-        <p class="small-muted">Selecciona la opción que aplique a tu región. Precio especial Plan Pioneros: <strong>$9 USD</strong>.</p>
+        <div class="payment-method">
+          <h4>💳 MercadoPago (Latinoamérica)</h4>
+          <p><strong>Paso 1:</strong> Completa el formulario arriba</p>
+          <p><strong>Paso 2:</strong> <a href="https://link.mercadopago.com/amorsinguerra" target="_blank" rel="noopener" class="btn-primary">Pagar $9 USD - Link MercadoPago</a></p>
+          <p><strong>Paso 3:</strong> Envía screenshot del pago + tus datos a: <strong>info@amorsinguerra.com</strong></p>
+        </div>
 
-        <div class="pioneros-counter" aria-live="polite" style="margin-top:8px">Quedan sólo <span id="pioneros-count-checkout">26</span> cupos</div>
+        <div class="payment-method">
+          <h4>🌍 PayPal (Internacional)</h4>
+          <p><strong>Paso 1:</strong> Completa el formulario arriba</p>
+          <p><strong>Paso 2:</strong> Envía $9 USD por PayPal a: <strong>hcuervo719@gmail.com</strong></p>
+          <p><strong>Paso 3:</strong> En el mensaje incluye: "Amor Sin Guerra + [tu nombre] + [tu email]"</p>
+          <p><strong>Paso 4:</strong> Confirma por email: <strong>info@amorsinguerra.com</strong></p>
+        </div>
 
-        <p class="small-muted" style="margin-top:12px">Para completar la compra primero ingresa tus datos en el formulario de abajo y luego elige el método de pago. Serás redirigido al proveedor de pago y luego volverás a la página de confirmación.</p>
+        <p class="small-muted"><strong>Confirmación:</strong> Recibirás acceso en 24 horas tras validar tu pago.</p>
       </div>
 
       <form class="confirm-form checkout-form" name="checkout" method="POST" data-netlify="true" action="confirmacion.html">
@@ -88,9 +99,8 @@
         <input type="hidden" id="stage-field" name="stage" value="">
 
         <!-- BOTONES DE PAGO AL FINAL -->
-        <div style="margin-top:20px;">
-          <button type="submit" id="mercadopago-pay-btn" formaction="mercadopago-redirect.html" class="btn-primary btn-large">Pagar con MercadoPago — $9 USD (Latinoamérica)</button>
-          <button type="submit" id="paypal-pay-btn" formaction="paypal-redirect.html" class="btn-secondary btn-gap">Pagar con PayPal — $9 USD (Internacional)</button>
+        <div class="form-actions" style="margin-top:18px">
+          <p class="small-muted">Al enviar el formulario recibirás el correo de confirmación. Para completar el pago, sigue las instrucciones del método seleccionado arriba.</p>
         </div>
       </form>
 
