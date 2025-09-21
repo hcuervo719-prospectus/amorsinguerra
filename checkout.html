@@ -108,11 +108,20 @@
   </footer>
 
   <script>
-    (function(){
-      function getParam(name){
+    (async function(){
+      async function getParam(name){
         const params = new URLSearchParams(window.location.search);
         return params.get(name);
       }
+
+      // Load pioneros central data
+      let pionerosData = { remaining: 26, limit: 50 };
+      try{
+        const r = await fetch('/data/pioneros.json');
+        if(r.ok) pionerosData = await r.json();
+      }catch(e){ console.warn('Pioneros data load failed', e); }
+      const pionerosRemaining = Number(pionerosData.remaining || 0);
+
       // Stages definition for checkout defaults
       const stages = [
         { id: '1', price: '19', label: 'Etapa 1', start: new Date(2025,9,4), end: new Date(2025,9,17) },
@@ -123,9 +132,9 @@
         { id: '6', price: '69', label: 'Etapa 6', start: new Date(2025,11,13), end: new Date(2025,11,20) }
       ];
 
-      const priceParam = getParam('price');
-      const stageParam = getParam('stage');
-      const planParam = getParam('plan');
+      const priceParam = await getParam('price');
+      const stageParam = await getParam('stage');
+      const planParam = await getParam('plan');
 
       let priceValue = priceParam ? priceParam : null;
 
@@ -142,7 +151,7 @@
 
       // If still no price, fallback to pioneros or default
       if(!priceValue){
-        if(planParam === 'pioneros') priceValue = '9';
+        if(planParam === 'pioneros' || pionerosRemaining > 0) priceValue = '9';
         else priceValue = '90';
       }
 
@@ -157,9 +166,23 @@
       const priceField = document.getElementById('price-field');
       if(priceField) priceField.value = priceValue;
 
-      // Render manual Pioneros counter (update this value manually when slots change)
+      // Render centralized Pioneros counter
       const pionerosCountCheckout = document.getElementById('pioneros-count-checkout');
-      if(pionerosCountCheckout){ pionerosCountCheckout.textContent = '26'; }
+      if(pionerosCountCheckout){ pionerosCountCheckout.textContent = String(pionerosRemaining); }
+
+      // Add price breakdown below total
+      const totalElParent = totalEl ? totalEl.parentNode : null;
+      if(totalElParent){
+        const existing = document.getElementById('price-breakdown');
+        if(!existing){
+          const div = document.createElement('div');
+          div.id = 'price-breakdown';
+          div.innerHTML = '<p>Incluye: Serie principal (6 episodios) + 5 episodios bonus</p>' +
+                          '<p>Precio normal Serie principal + los 5 episodios bonus: $285 USD</p>' +
+                          '<p>Descuento: 97%</p>';
+          totalElParent.insertAdjacentElement('afterend', div);
+        }
+      }
 
       // Forward any utm or other params if needed
     })();
