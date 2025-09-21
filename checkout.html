@@ -190,8 +190,8 @@
   <script src="https://sdk.mercadopago.com/js/v2"></script>
   <script>
     (function(){
-      const mpBtn = document.getElementById('mp-pay-btn');
-      const ppBtn = document.getElementById('pp-pay-btn');
+      const mercadopagoBtn = document.getElementById('mercadopago-pay-btn');
+      const paypalBtn = document.getElementById('paypal-pay-btn');
       const form = document.querySelector('.checkout-form');
 
       async function collectFormPayload(){
@@ -201,8 +201,8 @@
         return payload;
       }
 
-      if(mpBtn){
-        mpBtn.addEventListener('click', async function(e){
+      if(mercadopagoBtn){
+        mercadopagoBtn.addEventListener('click', async function(e){
           e.preventDefault();
           if(!form) return alert('Completa el formulario antes de pagar');
           const payload = await collectFormPayload();
@@ -214,22 +214,22 @@
             });
             if(!res.ok){
               const text = await res.text();
-              console.error('MP preference creation failed:', text);
+              console.error('MercadoPago preference creation failed:', text);
               throw new Error('No se pudo crear preferencia');
             }
             const json = await res.json();
             // Try to read public key from meta tag (set this in your deploy or page head)
-            const metaKey = document.querySelector('meta[name="mp-public-key"]');
+            const metaKey = document.querySelector('meta[name="mercadopago-public-key"]');
             const publicKey = metaKey ? metaKey.content : null;
 
             // If public key is present, use MercadoPago JS SDK to open checkout
             if(publicKey && window.MercadoPago && json && json.id){
               try{
-                const mp = new MercadoPago(publicKey, { locale: 'es-AR' });
-                mp.checkout({ preference: { id: json.id } });
+                const mpSdk = new MercadoPago(publicKey, { locale: 'es-AR' });
+                mpSdk.checkout({ preference: { id: json.id } });
                 return;
               }catch(e){
-                console.error('MP SDK checkout failed:', e);
+                console.error('MercadoPago SDK checkout failed:', e);
                 // Fallthrough to redirect fallback below
               }
             }
@@ -245,14 +245,14 @@
 
             alert('Error iniciando Mercado Pago. Intenta nuevamente o contacta soporte.');
           }catch(err){
-            console.error('MP error', err);
+            console.error('MercadoPago error', err);
             alert('Error iniciando Mercado Pago. Intenta nuevamente o contacta soporte.');
           }
         });
       }
 
-      if(ppBtn){
-        ppBtn.addEventListener('click', async function(e){
+      if(paypalBtn){
+        paypalBtn.addEventListener('click', async function(e){
           e.preventDefault();
           if(!form) return alert('Completa el formulario antes de pagar');
           const payload = await collectFormPayload();
@@ -266,8 +266,8 @@
       (function(){
         const params = new URLSearchParams(window.location.search);
         const method = params.get('method');
-        if(method === 'mercadopago' && mpBtn){ mpBtn.click(); }
-        if(method === 'paypal' && ppBtn){ ppBtn.click(); }
+        if(method === 'mercadopago' && mercadopagoBtn){ mercadopagoBtn.click(); }
+        if(method === 'paypal' && paypalBtn){ paypalBtn.click(); }
       })();
 
       // Prevent accidental native form submit (e.g. pressing Enter) — require explicit payment button click
