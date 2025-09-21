@@ -254,7 +254,16 @@
 
       const now = new Date();
       let currentStage = null;
+
+      // If pioneeros are finished, allow Etapa 1 even if its start date is in the future
+      const allowEarlyStage1 = pionerosRemaining <= 0;
+
       for(const s of stages){
+        // If pioneers are exhausted and this is stage 1 and now is before its start, treat it as active
+        if(allowEarlyStage1 && s.id === 1){
+          if(now <= s.end) { currentStage = s; break; }
+          continue;
+        }
         if(now >= s.start && now <= s.end){ currentStage = s; break; }
       }
 
@@ -276,6 +285,32 @@
           a.setAttribute('href', href);
         });
       }
+
+      // Hide or show individual stage purchase links depending on Pioneros availability
+      const stageEls = Array.from(document.querySelectorAll('.stages .stage'));
+      stageEls.forEach(el => {
+        const btn = el.querySelector('a.btn-primary');
+        const stageId = el.getAttribute('data-stage');
+        const stageObj = stages.find(s => String(s.id) === String(stageId));
+
+        // If Pioneros are active, hide purchase buttons for all stages
+        if(pionerosRemaining > 0){
+          if(btn) btn.style.display = 'none';
+        } else {
+          // Show and ensure hrefs are correct
+          if(btn){
+            btn.style.display = '';
+            if(stageObj) btn.setAttribute('href', 'checkout.html?stage=' + stageObj.id + '&price=' + stageObj.price);
+          }
+        }
+
+        // Mark finished stages and remove their buttons
+        if(stageObj && now > stageObj.end){
+          const h = el.querySelector('.stage-title');
+          if(h && !/Finalizada/i.test(h.textContent)) h.textContent = h.textContent + ' — Finalizada';
+          if(btn) btn.remove();
+        }
+      });
 
       // Priority: if pioneros available, show Pioneros unless explicitly forcing stage
       if(pionerosRemaining > 0 && planParam !== 'force_stage'){
