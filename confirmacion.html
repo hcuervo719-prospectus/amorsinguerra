@@ -43,19 +43,32 @@
 
   <main>
     <section class="section container">
-      <h2 class="section-title">¡Gracias! Hemos recibido tu confirmación</h2>
-      <p class="small-muted">Tu pago ha sido registrado y en breve validaremos tu acceso. Revisa tu correo para más instrucciones.</p>
+      <h2 class="section-title">¡Bienvenidos a Amor Sin Guerra!</h2>
+
+      <p>Hemos registrado tu pago. Recibirás un email de confirmación en las próximas 2 horas con:</p>
+      <ul>
+        <li>Acceso a la serie completa (6 episodios)</li>
+        <li>Links a los 5 episodios bonus</li>
+        <li>Invitación al grupo exclusivo de pioneros</li>
+        <li>Cronograma de estreno (15 enero 2026)</li>
+      </ul>
+
+      <p><strong>¿No recibiste el email?</strong> Revisa spam o escribe a <a href="mailto:info@amorsinguerra.com">info@amorsinguerra.com</a></p>
 
       <div style="margin-top:18px">
         <a class="btn-primary btn-large" href="/">Volver al inicio</a>
         <a class="btn-secondary btn-gap" href="/episodios.html">Ir al contenido</a>
       </div>
-
-      <div style="margin-top:18px">
-        <p>Si necesitas ayuda, escribe a <a href="mailto:info@amorsinguerra.com">info@amorsinguerra.com</a> y escanea el comprobante que subiste.</p>
-      </div>
     </section>
   </main>
+
+  <!-- TRACKING DE CONVERSIÓN -->
+  <script>
+    try{
+      if(typeof fbq === 'function') fbq('track', 'Purchase', {value: 9, currency: 'USD'});
+      if(typeof gtag === 'function') gtag('event', 'purchase', {transaction_id: String(Date.now()), value: 9, currency: 'USD'});
+    }catch(e){ console.warn('Tracking error', e); }
+  </script>
 
   <footer class="site-footer">
     <div class="container footer-inner">
