@@ -100,6 +100,12 @@ body.page-root{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helv
   .lead-form textarea{grid-column:auto}
 }
 
+/* Pioneros counter */
+.pioneros-counter{display:inline-flex;align-items:center;gap:8px;background:var(--blue-100);padding:8px 10px;border-radius:10px;font-weight:700;color:var(--blue-700)}
+.pioneros-counter .counter-label{font-weight:600;font-size:0.95rem}
+.pioneros-counter #pioneros-count{font-size:1.15rem;color:var(--blue-900)}
+.pioneros-counter[aria-live]{outline:0}
+
 /* Stages pricing styles */
 .stages{display:flex;flex-direction:column;gap:12px;margin-top:12px}
 .stage{background:#fff;border:1px solid var(--blue-100);padding:12px;border-radius:8px}
