@@ -1,7 +1,8 @@
 const fs = require('fs');
 
-// Netlify Function to receive Mercado Pago webhooks (IPN)
-// Configure your Mercado Pago webhook URL to: https://<your-site>/.netlify/functions/mp_webhook
+// Deprecated: legacy filename for Mercado Pago webhooks. New canonical function is mercadopago_webhook.
+// You can configure your Mercado Pago webhook URL to: https://<your-site>/.netlify/functions/mercadopago_webhook
+// This legacy function remains for backward compatibility.
 // Requires MERCADOPAGO_ACCESS_TOKEN env variable (server-side secret)
 
 exports.handler = async function(event, context) {
