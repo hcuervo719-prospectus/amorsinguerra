@@ -84,7 +84,7 @@
         <label for="email">Email de contacto</label>
         <input id="email" name="email" class="form-input" type="email" required placeholder="Correo de contacto">
 
-        <label for="whatsapp">Tel��fono WhatsApp</label>
+        <label for="whatsapp">Teléfono WhatsApp</label>
         <input id="whatsapp" name="whatsapp" class="form-input" type="tel" placeholder="(+country code) 123 456 789" required>
 
         <!-- Screenshot upload removed for PayPal/MercadoPago flows -->
@@ -147,7 +147,7 @@
       }
 
       function formatUSD(n){
-        return '$' + n + ' USD';
+        return '$' + n;
       }
       const formatted = formatUSD(priceValue);
       const priceEl = document.getElementById('price-display');
