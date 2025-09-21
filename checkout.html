@@ -82,6 +82,25 @@
         <label for="whatsapp">Teléfono WhatsApp</label>
         <input id="whatsapp" name="whatsapp" class="form-input" type="tel" placeholder="(+country code) 123 456 789" required>
 
+        <div style="margin-top:12px">
+          <button type="submit" formaction="mercadopago-redirect.html" class="btn-primary btn-large">Pagar con MercadoPago — $9 USD (Latinoamérica)</button>
+          <button type="submit" formaction="paypal-redirect.html" class="btn-secondary btn-gap">Pagar con PayPal — $9 USD (Internacional)</button>
+        </div>
+
+        <p class="small-muted" style="margin-top:12px">Al finalizar el pago serás redirigido automáticamente a la página de confirmación.</p>
+
+        <input type="hidden" id="price-field" name="price" value="9">
+        <input type="hidden" id="stage-field" name="stage" value="">
+
+        <button class="btn-primary btn-large" type="submit">Confirmar mi acceso</button>
+        <input id="fullname" name="fullname" class="form-input" type="text" required placeholder="Nombres (ej. Ana & Miguel)">
+
+        <label for="email">Email de contacto</label>
+        <input id="email" name="email" class="form-input" type="email" required placeholder="Correo de contacto">
+
+        <label for="whatsapp">Teléfono WhatsApp</label>
+        <input id="whatsapp" name="whatsapp" class="form-input" type="tel" placeholder="(+country code) 123 456 789" required>
+
         <!-- Screenshot upload removed for PayPal/MercadoPago flows -->
         <p class="small-muted">Si tu pago requiere confirmación manual, envía el comprobante por email a <a href="mailto:info@amorsinguerra.com">info@amorsinguerra.com</a>.</p>
 
