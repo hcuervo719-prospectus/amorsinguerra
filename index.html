@@ -116,7 +116,7 @@
         </li>
         <li>
           <h4 class="method-title">2. Conversaciones estructuradas</h4>
-          <p class="method-desc">Herramientas para hablar de temas sensibles sin que la conversaci��n se vuelva destructiva.</p>
+          <p class="method-desc">Herramientas para hablar de temas sensibles sin que la conversación se vuelva destructiva.</p>
         </li>
         <li>
           <h4 class="method-title">3. Remodelación de expectativas</h4>
@@ -286,8 +286,7 @@
       } else {
         // Prelaunch / after stages
         setCTAs('Reserva tu cupo - Preventa', 'checkout.html?price=' + finalPrice);
-        const priceStrong = document.querySelector('.offer-price strong');
-        if(priceStrong) priceStrong.textContent = '$' + finalPrice + ' USD';
+        // Do not overwrite the Plan Pioneros price display here so the $9 USD message remains visible.
       }
 
       if(contactBtn){ contactBtn.textContent = 'Enviar consulta'; }
