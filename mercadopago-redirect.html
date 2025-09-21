@@ -22,10 +22,11 @@
       const whatsapp = params.get('whatsapp') || '';
       const price = params.get('price') || '9';
 
-      // MercadoPago link (public pref link). Append info for record-keeping if supported.
+      // If a preference init_point param is provided, redirect there; otherwise use public link
       const mpBase = 'https://link.mercadopago.com/amorsinguerra';
       const returnUrl = location.origin + '/confirmacion.html';
-      const mpUrl = mpBase + '?amount=' + encodeURIComponent(price) + '&metadata=' + encodeURIComponent(fullname + '|' + email + '|' + whatsapp) + '&return=' + encodeURIComponent(returnUrl);
+      const init = params.get('init_point');
+      const mpUrl = init ? init : (mpBase + '?amount=' + encodeURIComponent(price) + '&metadata=' + encodeURIComponent(fullname + '|' + email + '|' + whatsapp) + '&return=' + encodeURIComponent(returnUrl));
 
       document.getElementById('manual').href = mpUrl;
       document.getElementById('debug').textContent = 'Preparando pago de $' + price + ' USD para: ' + fullname;
