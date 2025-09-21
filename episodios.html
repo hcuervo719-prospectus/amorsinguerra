@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Episodios — Amor Sin Guerra</title>
-  <meta name="description" content="Listado completo de episodios de la serie Amor Sin Guerra. Serie principal (6 episodios) y episodios bonus especializados. Precios en COP." />
+  <meta name="description" content="Listado completo de episodios de la serie Amor Sin Guerra. Serie principal (6 episodios) y episodios bonus especializados. Precios en USD." />
   <link rel="icon" href="https://cdn.builder.io/api/v1/image/assets%2Fb7400011ae9a4ecca8c90d62243bba6c%2F7260047a15434bc58759391e342f94ba?format=webp&width=800" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,7 +55,7 @@
     <section class="section container">
       <h2 class="section-title">Serie principal: Amor Sin Guerra</h2>
       <p class="lead">6 episodios fundamentales — 180 minutos en total</p>
-      <p class="small-muted">Valor: <strong>$369.000 COP</strong></p>
+      <p class="small-muted">Valor: <strong>$369.000 USD</strong></p>
 
 
       <ol class="method-list">
@@ -122,7 +122,7 @@
 
     <section class="section container">
       <h3 class="section-title">Episodios bonus especializados</h3>
-      <p class="small-muted">Cada episodio bonus: <strong>$159.900 COP</strong></p>
+      <p class="small-muted">Cada episodio bonus: <strong>$159.900 USD</strong></p>
 
       <article class="testimonial">
         <h4 class="method-title">BONUS 1: "Amor en Tiempos de Crisis"</h4>
@@ -196,8 +196,8 @@
     <section class="section container">
       <h3 class="section-title">Resumen de precios</h3>
       <ul class="method-list">
-        <li>Serie principal (6 episodios): <strong>$369.000 COP</strong></li>
-        <li>Episodio bonus (cada uno): <strong>$159.900 COP</strong></li>
+        <li>Serie principal (6 episodios): <strong>$369.000 USD</strong></li>
+        <li>Episodio bonus (cada uno): <strong>$159.900 USD</strong></li>
       </ul>
       <div style="margin-top:12px">
         <a id="reserve-btn" class="btn-primary btn-large" href="/checkout.html">Reserva tu cupo ya</a>
@@ -303,7 +303,7 @@
         { id: 6, end: new Date(year, 10, 15, 23,59,59), price: 319000, label: 'Etapa 6', deadline: '15 noviembre' }
       ];
       const postPreventa = { price: 369000, label: 'Precio final' };
-      function formatCOP(n){
+      function formatUSD(n){
         return '$' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
       }
       const now = new Date();
@@ -318,9 +318,9 @@
       }
       if(stageEl){
         if(current){
-          stageEl.textContent = current.label + ': ' + formatCOP(current.price) + ' hasta ' + current.deadline;
+          stageEl.textContent = current.label + ': ' + formatUSD(current.price) + ' hasta ' + current.deadline;
         } else {
-          stageEl.textContent = 'Precio final: ' + formatCOP(postPreventa.price);
+          stageEl.textContent = 'Precio final: ' + formatUSD(postPreventa.price);
         }
       }
     })();
