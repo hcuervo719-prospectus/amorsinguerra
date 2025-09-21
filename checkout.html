@@ -272,6 +272,14 @@
         if(method === 'paypal' && ppBtn){ ppBtn.click(); }
       })();
 
+      // Prevent accidental native form submit (e.g. pressing Enter) — require explicit payment button click
+      if(form){
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          alert('Por favor elige un método de pago usando los botones provistos.');
+        });
+      }
+
     })();
   </script>
 
