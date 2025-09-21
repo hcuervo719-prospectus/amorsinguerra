@@ -1,25 +1,32 @@
 :root{
   --checkout-max-width:900px;
 }
-.checkout{max-width:var(--checkout-max-width);margin:0 auto;padding:32px}
-.order-summary{background:#fff;border:1px solid var(--blue-100);padding:18px;border-radius:8px;margin-bottom:18px}
-.order-summary h3{margin:0 0 8px}
-.payment-section{margin:18px 0 24px}
-.qr-wrapper{display:flex;justify-content:center;padding:18px}
-.qr-wrapper img{max-width:320px;width:100%;height:auto;border-radius:8px}
-.qr-instructions{font-size:0.95rem;color:var(--muted);text-align:center;margin-top:8px}
-.qr-steps{margin-top:8px}
-.confirm-form{background:#fff;border:1px solid var(--blue-100);padding:16px;border-radius:8px}
-.confirm-form label{display:block;margin-top:10px;font-weight:600}
-.confirm-form .form-input{width:100%;padding:10px;border:1px solid var(--blue-100);border-radius:8px;margin-top:6px}
-.support{margin-top:12px;color:var(--muted)}
-.payment-transparency{background:#f8f9fa;padding:1rem;border-left:4px solid #3182ce;margin:1rem 0;border-radius:8px}
-.payment-transparency h4{margin:0 0 6px;color:var(--blue-900)}
-.payment-transparency p{margin:0;color:var(--muted)}
-.small-text{font-size:0.9rem;color:var(--muted)}
-.confirmation{padding:36px 0}
-.next-steps ul{padding-left:18px}
-.social-share a{margin-right:8px}
-@media (max-width:900px){
-  .qr-wrapper img{max-width:280px}
-}
+ .checkout{max-width:var(--checkout-max-width);margin:0 auto;padding:32px}
+ .order-summary{background:#fff;border:1px solid var(--blue-100);padding:18px;border-radius:8px;margin-bottom:18px}
+ .order-summary h3{margin:0 0 8px}
+-.payment-section{margin:18px 0 24px}
++.payment-section{margin:18px 0 24px}
+ .qr-wrapper{display:flex;justify-content:center;padding:18px}
+ .qr-wrapper img{max-width:320px;width:100%;height:auto;border-radius:8px}
+ .qr-instructions{font-size:0.95rem;color:var(--muted);text-align:center;margin-top:8px}
+ .qr-steps{margin-top:8px}
+ .confirm-form{background:#fff;border:1px solid var(--blue-100);padding:16px;border-radius:8px}
+ .confirm-form label{display:block;margin-top:10px;font-weight:600}
+ .confirm-form .form-input{width:100%;padding:10px;border:1px solid var(--blue-100);border-radius:8px;margin-top:6px}
+ .support{margin-top:12px;color:var(--muted)}
+ .payment-transparency{background:#f8f9fa;padding:1rem;border-left:4px solid #3182ce;margin:1rem 0;border-radius:8px}
+ .payment-transparency h4{margin:0 0 6px;color:var(--blue-900)}
+ .payment-transparency p{margin:0;color:var(--muted)}
+ .small-text{font-size:0.9rem;color:var(--muted)}
+ .confirmation{padding:36px 0}
+ .next-steps ul{padding-left:18px}
+ .social-share a{margin-right:8px}
++
++/* New simple payment method styles */
++.payment-methods-container{margin-top:20px}
++.payment-method{border:1px solid var(--blue-100);padding:15px;margin:10px 0;border-radius:8px;background:#fff}
++.payment-method h4{margin:0 0 8px}
++.form-actions{margin-top:18px}
+ @media (max-width:900px){
+   .qr-wrapper img{max-width:280px}
+ }
