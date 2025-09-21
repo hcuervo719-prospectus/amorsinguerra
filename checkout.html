@@ -235,6 +235,46 @@
     })();
   </script>
 
+  <script>
+    // Country selector: show local amounts and update MercadoPago link if needed
+    (function(){
+      const selector = document.getElementById('country-selector');
+      if(!selector) return;
+      const paymentInfo = document.getElementById('payment-info');
+      const countryName = document.getElementById('country-name');
+      const localAmount = document.getElementById('local-amount');
+      const mpLink = document.getElementById('mercadopago-link');
+
+      const countries = {
+        mx: {name: 'México', amount: '$180 MXN'},
+        ar: {name: 'Argentina', amount: '$9,000 ARS'},
+        co: {name: 'Colombia', amount: '$37,000 COP'},
+        br: {name: 'Brasil', amount: 'R$ 50 BRL'},
+        cl: {name: 'Chile', amount: '$8,500 CLP'},
+        pe: {name: 'Perú', amount: 'S/ 34 PEN'},
+        uy: {name: 'Uruguay', amount: '$390 UYU'}
+      };
+
+      selector.addEventListener('change', function(e){
+        const country = e.target.value;
+        if(country && countries[country]){
+          countryName.textContent = countries[country].name;
+          localAmount.textContent = countries[country].amount;
+          paymentInfo.style.display = 'block';
+
+          // Optionally, add a query param to the MercadoPago link to help reconciliation (no sensitive data)
+          if(mpLink){
+            const url = new URL(mpLink.href);
+            url.searchParams.set('country', country);
+            mpLink.href = url.toString();
+          }
+        } else {
+          paymentInfo.style.display = 'none';
+        }
+      });
+    })();
+  </script>
+
   <!-- Analytics placeholders: add Facebook Pixel ID and Google Analytics Measurement ID later -->
 </body>
 </html>
