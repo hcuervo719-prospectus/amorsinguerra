@@ -293,35 +293,14 @@
 
   <script>
     (function(){
-      const year = new Date().getFullYear();
-      const stages = [
-        { id: 1, end: new Date(year, 9, 11, 23,59,59), price: 119000, label: 'Etapa 1', deadline: '11 octubre' },
-        { id: 2, end: new Date(year, 9, 18, 23,59,59), price: 159000, label: 'Etapa 2', deadline: '18 octubre' },
-        { id: 3, end: new Date(year, 9, 25, 23,59,59), price: 199000, label: 'Etapa 3', deadline: '25 octubre' },
-        { id: 4, end: new Date(year, 10, 1, 23,59,59), price: 239000, label: 'Etapa 4', deadline: '1 noviembre' },
-        { id: 5, end: new Date(year, 10, 8, 23,59,59), price: 279000, label: 'Etapa 5', deadline: '8 noviembre' },
-        { id: 6, end: new Date(year, 10, 15, 23,59,59), price: 319000, label: 'Etapa 6', deadline: '15 noviembre' }
-      ];
-      const postPreventa = { price: 369000, label: 'Precio final' };
-      function formatUSD(n){
-        return '$' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-      }
-      const now = new Date();
-      const current = stages.find(s => now <= s.end) || null;
-      const price = current ? current.price : postPreventa.price;
-      const stageId = current ? current.id : 'final';
-
+      // Link Reserve button to Plan Pioneros (USD)
       const reserveBtn = document.getElementById('reserve-btn');
-      const stageEl = document.getElementById('current-stage');
       if(reserveBtn){
-        reserveBtn.href = '/checkout.html?price=' + price + '&stage=' + stageId;
+        reserveBtn.href = '/checkout.html?plan=pioneros&price=9';
       }
+      const stageEl = document.getElementById('current-stage');
       if(stageEl){
-        if(current){
-          stageEl.textContent = current.label + ': ' + formatUSD(current.price) + ' hasta ' + current.deadline;
-        } else {
-          stageEl.textContent = 'Precio final: ' + formatUSD(postPreventa.price);
-        }
+        stageEl.textContent = 'Plan Pioneros: $9 USD — primeros 20 parejas';
       }
     })();
   </script>
