@@ -23,7 +23,7 @@
       const price = params.get('price') || '9';
 
       // If a preference init_point param is provided, redirect there; otherwise use public link
-      const mercadopagoBase = 'https://link.mercadopago.com/amorsinguerra';
+      const mercadopagoBase = 'https://link.mercadopago.com.co/amorsinguerra';
       const returnUrl = location.origin + '/confirmacion.html';
       const init = params.get('init_point');
       const mpUrl = init ? init : (mercadopagoBase + '?amount=' + encodeURIComponent(price) + '&metadata=' + encodeURIComponent(fullname + '|' + email + '|' + whatsapp) + '&return=' + encodeURIComponent(returnUrl));
