@@ -219,52 +219,79 @@
         return payload;
       }
 
+      // Progressive enhancement: read formaction and convert submit->button so JS controls flow.
+      [mercadopagoBtn, paypalBtn].forEach(btn=>{
+        if(btn){
+          const fa = btn.getAttribute('formaction');
+          if(fa){ btn.dataset.formaction = fa; btn.type = 'button'; }
+        }
+      });
+
+      // Helper: fallback redirect to formaction with params
+      function fallbackToFormAction(btn, payload){
+        try{
+          const params = new URLSearchParams(payload).toString();
+          const target = btn && btn.dataset && btn.dataset.formaction ? btn.dataset.formaction : (btn === mercadopagoBtn ? 'mercadopago-redirect.html' : 'paypal-redirect.html');
+          window.location.href = target + (params ? ('?' + params) : '');
+        }catch(e){
+          // As last resort, submit the form to the page's action
+          form.submit();
+        }
+      }
+
       if(mercadopagoBtn){
         mercadopagoBtn.addEventListener('click', async function(e){
           e.preventDefault();
           if(!form) return alert('Completa el formulario antes de pagar');
           const payload = await collectFormPayload();
+
+          // Try server-side preference creation
           try{
+            const controller = new AbortController();
+            const timeout = setTimeout(()=> controller.abort(), 8000);
             const res = await fetch('/.netlify/functions/create_mercadopago_preference', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
+              body: JSON.stringify(payload),
+              signal: controller.signal
             });
+            clearTimeout(timeout);
+
             if(!res.ok){
               const text = await res.text();
-              console.error('MercadoPago preference creation failed:', text);
-              throw new Error('No se pudo crear preferencia');
+              console.error('create_mercadopago_preference failed:', text);
+              return fallbackToFormAction(mercadopagoBtn, payload);
             }
+
             const json = await res.json();
-            // Try to read public key from meta tag (set this in your deploy or page head)
+            // load publicKey from meta (may have been set by get_mercadopago_public_key)
             const metaKey = document.querySelector('meta[name="mercadopago-public-key"]');
             const publicKey = metaKey ? metaKey.content : null;
 
-            // If public key is present, use MercadoPago JS SDK to open checkout
+            // If public key and SDK available, open in-page checkout
             if(publicKey && window.MercadoPago && json && json.id){
               try{
                 const mercadopagoSdk = new MercadoPago(publicKey, { locale: 'es-AR' });
                 mercadopagoSdk.checkout({ preference: { id: json.id } });
                 return;
-              }catch(e){
-                console.error('MercadoPago SDK checkout failed:', e);
-                // Fallthrough to redirect fallback below
+              }catch(err){
+                console.error('MercadoPago SDK checkout failed', err);
+                // fallthrough to redirect
               }
             }
 
-            // Fallback: redirect to server-provided init_point (or to redirect page)
+            // If init_point provided, redirect there
             if(json && json.init_point){
-              // Preserve form data in query string for redirect page
-              const params = new URLSearchParams(payload).toString();
-              const url = 'mercadopago-redirect.html?init_point=' + encodeURIComponent(json.init_point) + (params ? '&' + params : '');
-              window.location.href = url;
+              window.location.href = json.init_point;
               return;
             }
 
-            alert('Error iniciando Mercado Pago. Intenta nuevamente o contacta soporte.');
+            // Fallback to formaction redirect with params
+            return fallbackToFormAction(mercadopagoBtn, payload);
+
           }catch(err){
-            console.error('MercadoPago error', err);
-            alert('Error iniciando Mercado Pago. Intenta nuevamente o contacta soporte.');
+            console.error('MercadoPago handler error', err);
+            return fallbackToFormAction(mercadopagoBtn, payload);
           }
         });
       }
@@ -274,9 +301,34 @@
           e.preventDefault();
           if(!form) return alert('Completa el formulario antes de pagar');
           const payload = await collectFormPayload();
-          const params = new URLSearchParams(payload).toString();
-          // Redirect to paypal redirect page with query params
-          window.location.href = 'paypal-redirect.html?' + params;
+
+          // Try server-side PayPal order creation
+          try{
+            const controller = new AbortController();
+            const timeout = setTimeout(()=> controller.abort(), 8000);
+            const res = await fetch('/.netlify/functions/create_paypal_order', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+              signal: controller.signal
+            });
+            clearTimeout(timeout);
+            if(!res.ok){
+              const text = await res.text();
+              console.error('create_paypal_order failed:', text);
+              return fallbackToFormAction(paypalBtn, payload);
+            }
+            const json = await res.json();
+            if(json && json.approval_url){
+              window.location.href = json.approval_url;
+              return;
+            }
+            // fallback to redirect page with params
+            return fallbackToFormAction(paypalBtn, payload);
+          }catch(err){
+            console.error('PayPal handler error', err);
+            return fallbackToFormAction(paypalBtn, payload);
+          }
         });
       }
 
