@@ -213,6 +213,31 @@
     </div>
   </footer>
 
+  <script>
+    (function(){
+      const stages = [
+        { id: 1, start: new Date(2025,9,4), end: new Date(2025,9,17), price: 19, label: 'Etapa 1' },
+        { id: 2, start: new Date(2025,9,18), end: new Date(2025,9,31), price: 29, label: 'Etapa 2' },
+        { id: 3, start: new Date(2025,10,1), end: new Date(2025,10,14), price: 39, label: 'Etapa 3' },
+        { id: 4, start: new Date(2025,10,15), end: new Date(2025,10,28), price: 49, label: 'Etapa 4' },
+        { id: 5, start: new Date(2025,10,29), end: new Date(2025,11,12), price: 59, label: 'Etapa 5' },
+        { id: 6, start: new Date(2025,11,13), end: new Date(2025,11,20), price: 69, label: 'Etapa 6' }
+      ];
+      const now = new Date();
+      let current = stages.find(s => now >= s.start && now <= s.end) || null;
+      const reserveBtn = document.getElementById('reserve-btn');
+      const stageEl = document.getElementById('current-stage');
+      if(current){
+        reserveBtn.href = '/checkout.html?stage=' + current.id + '&price=' + current.price;
+        stageEl.textContent = current.label + ': $' + current.price + ' USD — ' + current.start.toLocaleDateString() + ' a ' + current.end.toLocaleDateString();
+      } else {
+        // If no current stage, show prelaunch info
+        reserveBtn.href = '/checkout.html?price=90';
+        stageEl.textContent = 'Preventa cerrada o no activa. Precio final: $90 USD. Estreno: 15 enero 2026.';
+      }
+    })();
+  </script>
+
   <!-- JSON-LD structured data: VideoObjects and Events for bonus release schedule -->
   <script type="application/ld+json">
   {
