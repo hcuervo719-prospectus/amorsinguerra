@@ -64,7 +64,7 @@
       </div>
 
       <div class="payment-methods-container">
-        <h3>Métodos de Pago Disponibles</h3>
+        <h3>1️⃣ REALIZA TU PAGO</h3>
 
         <h3>Elige tu país y verifica el monto exacto:</h3>
         <select id="country-selector" class="form-input">
@@ -75,7 +75,7 @@
           <option value="br">🇧🇷 Brasil - R$ 50 BRL</option>
           <option value="cl">🇨🇱 Chile - $8,500 CLP</option>
           <option value="pe">🇵🇪 Perú - S/ 34 PEN</option>
-          <option value="uy">🇺🇾 Uruguay - $390 UYU</option>
+          <option value="uy">��🇾 Uruguay - $390 UYU</option>
         </select>
 
         <div id="payment-info" style="margin-top:15px; display:none;">
@@ -91,35 +91,31 @@
 
         <div class="payment-method">
           <h4>💳 MercadoPago (Latinoamérica)</h4>
-          <p><strong>Paso 1:</strong> Completa el formulario arriba</p>
-          <p><strong>Paso 2:</strong> <a href="https://link.mercadopago.com.co/amorsinguerra" target="_blank" rel="noopener" class="btn-primary">Pagar $9 USD - Link MercadoPago</a></p>
-          <p><strong>Paso 3:</strong> Envía screenshot del pago + tus datos a: <strong>info@amorsinguerra.com</strong></p>
+          <p><strong>Para países latinos:</strong> Selecciona tu país arriba para ver el monto exacto</p>
+          <p><a href="https://link.mercadopago.com.co/amorsinguerra" target="_blank" rel="noopener" class="btn-primary">Pagar $9 USD - MercadoPago</a></p>
+          <p class="small-muted">Guarda el screenshot de confirmación del pago</p>
         </div>
 
         <div class="payment-method">
           <h4>🌍 PayPal (Internacional)</h4>
-          <p><strong>Paso 1:</strong> Completa el formulario arriba</p>
-          <p><strong>Paso 2:</strong> Si prefieres pagar directamente desde PayPal, usa el botón seguro abajo o el enlace público.</p>
+          <p><strong>Para usuarios internacionales:</strong></p>
 
-          <!-- PayPal hosted button container (provided by PayPal) -->
+          <!-- Mantener el botón PayPal existente -->
           <div id="paypal-container-L2AMRF4WA9ZDW" style="margin:10px 0;"></div>
           <script>
             try{
               if(window.paypal && paypal.HostedButtons){
                 paypal.HostedButtons({ hostedButtonId: "L2AMRF4WA9ZDW" }).render("#paypal-container-L2AMRF4WA9ZDW");
               } else {
-                // SDK not loaded yet or blocked, show fallback link
                 var fallback = document.createElement('div');
                 fallback.innerHTML = '<a class="btn-secondary" href="https://www.paypal.com/ncp/payment/L2AMRF4WA9ZDW" target="_blank" rel="noopener">Pagar $9 USD - PayPal</a>';
                 document.getElementById('paypal-container-L2AMRF4WA9ZDW').appendChild(fallback);
               }
-            }catch(e){
-              console.warn('PayPal Hosted Button render failed', e);
-            }
+            }catch(e){ console.warn('PayPal Hosted Button render failed', e); }
           </script>
 
-          <p style="margin-top:8px;"><strong>Paso 3:</strong> Si quieres enviar manualmente: envía $9 USD por PayPal a: <strong>hcuervo719@gmail.com</strong></p>
-          <p><strong>Paso 4:</strong> En el mensaje incluye: "Amor Sin Guerra + [tu nombre] + [tu email]" y confirma por email: <strong>info@amorsinguerra.com</strong></p>
+          <p><strong>Alternativo:</strong> Envía $9 USD por PayPal a: <strong>hcuervo719@gmail.com</strong></p>
+          <p class="small-muted">Guarda el screenshot de confirmación del pago</p>
         </div>
 
         <p class="small-muted"><strong>Confirmación:</strong> Recibirás acceso en 24 horas tras validar tu pago.</p>
@@ -127,7 +123,10 @@
 
       <form class="confirm-form checkout-form" name="checkout" method="POST" data-netlify="true" action="confirmacion.html">
         <input type="hidden" name="form-name" value="checkout" />
-        <h3>Confirmación</h3>
+        <h3>2️⃣ CONFIRMA TU PAGO (Después de pagar)</h3>
+
+        <p><strong>⚠️ Solo llena este formulario DESPUÉS de completar tu pago.</strong></p>
+        <p>Necesitarás el screenshot de confirmación para enviarlo por email.</p>
 
         <label for="fullname">Nombre completo de la pareja</label>
         <input id="fullname" name="fullname" class="form-input" type="text" required placeholder="Nombres (ej. Ana & Miguel)">
@@ -138,14 +137,33 @@
         <label for="whatsapp">Teléfono WhatsApp</label>
         <input id="whatsapp" name="whatsapp" class="form-input" type="tel" placeholder="(+country code) 123 456 789" required>
 
+        <label for="payment-method">Método de pago utilizado</label>
+        <select id="payment-method" name="payment-method" class="form-input" required>
+          <option value="">Selecciona tu método de pago</option>
+          <option value="mercadopago">MercadoPago</option>
+          <option value="paypal">PayPal</option>
+        </select>
+
         <input type="hidden" id="price-field" name="price" value="9">
         <input type="hidden" id="stage-field" name="stage" value="">
 
         <!-- BOTONES DE PAGO AL FINAL -->
-        <div class="form-actions" style="margin-top:18px">
-          <p class="small-muted">Al enviar el formulario recibirás el correo de confirmación. Para completar el pago, sigue las instrucciones del método seleccionado arriba.</p>
+        <div class="form-actions" style="margin-top:20px;">
+          <button type="submit" class="btn-primary" style="width:100%; padding:15px; font-size:16px; font-weight:600;">
+            ✅ CONFIRMAR MI ACCESO A AMOR SIN GUERRA
+          </button>
+          <p class="small-muted" style="margin-top:10px;">
+            <strong>Paso final:</strong> Envía el screenshot del pago a: <strong>info@amorsinguerra.com</strong>
+          </p>
         </div>
       </form>
+
+      <div style="background:#f8f9fa; padding:20px; border-radius:8px; margin:20px 0;">
+        <h3>3️⃣ RECIBE TU ACCESO</h3>
+        <p>✅ Recibirás confirmación por email en máximo 24 horas</p>
+        <p>✅ Acceso completo a los 6 episodios + 5 bonus</p>
+        <p>✅ Materiales descargables y comunidad privada</p>
+      </div>
 
       <p class="support">¿Dudas? Escribe a <a href="mailto:info@amorsinguerra.com">info@amorsinguerra.com</a></p>
     </section>
