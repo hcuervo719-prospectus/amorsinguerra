@@ -28,5 +28,19 @@
 +.payment-method h4{margin:0 0 8px}
 +.form-actions{margin-top:18px}
  @media (max-width:900px){
-   .qr-wrapper img{max-width:280px}
- }
+  .qr-wrapper img{max-width:280px}
+}
+
+/* Checkout-specific primary button (override if needed) */
+.checkout .btn-primary, .checkout .btn-primary:visited {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  transition: background 0.3s;
+}
+.checkout .btn-primary:hover{ background:#0056b3 }
