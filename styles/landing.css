@@ -100,6 +100,12 @@ body.page-root{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helv
   .lead-form textarea{grid-column:auto}
 }
 
+/* Release banner */
+.release-banner{background:var(--warm-500);color:#fff;padding:12px 16px;border-radius:10px;font-weight:700;margin:14px 0;font-size:1.05rem;text-align:center}
+@media (max-width:600px){
+  .release-banner{font-size:1rem;padding:10px}
+}
+
 /* Pioneros counter */
 .pioneros-counter{display:inline-flex;align-items:center;gap:8px;background:var(--blue-100);padding:8px 10px;border-radius:10px;font-weight:700;color:var(--blue-700)}
 .pioneros-counter .counter-label{font-weight:600;font-size:0.95rem}
